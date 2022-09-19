@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4kn-TC-Bh8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4kn-TC-Bh8">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,6 +22,7 @@
                     <connections>
                         <segue destination="aeQ-cA-JH3" kind="relationship" relationship="viewControllers" id="5ND-24-ZQl"/>
                         <segue destination="C0y-lD-56Q" kind="relationship" relationship="viewControllers" id="CKR-Fu-vjv"/>
+                        <segue destination="UqG-ja-lHe" kind="relationship" relationship="viewControllers" id="3DE-aV-LwB"/>
                         <segue destination="422-oo-uf5" kind="relationship" relationship="viewControllers" id="mMa-Ys-M9q"/>
                     </connections>
                 </tabBarController>
@@ -105,6 +107,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NKB-KY-Gyz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1677" y="84"/>
+        </scene>
+        <!--Адреса-->
+        <scene sceneID="YPF-MB-KEY">
+            <objects>
+                <viewController id="UqG-ja-lHe" customClass="MapsController" customModule="InvestInfo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lOK-WJ-TRI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Jja-DL-Ao6">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                            </mapView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="68T-99-oOl"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="68T-99-oOl" firstAttribute="trailing" secondItem="Jja-DL-Ao6" secondAttribute="trailing" id="4Rh-3d-nVP"/>
+                            <constraint firstItem="Jja-DL-Ao6" firstAttribute="top" secondItem="lOK-WJ-TRI" secondAttribute="top" id="9UW-YV-8i8"/>
+                            <constraint firstItem="68T-99-oOl" firstAttribute="bottom" secondItem="Jja-DL-Ao6" secondAttribute="bottom" id="cGz-8Z-s3q"/>
+                            <constraint firstItem="Jja-DL-Ao6" firstAttribute="leading" secondItem="68T-99-oOl" secondAttribute="leading" id="d3f-SW-01M"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Адреса" image="safari" catalog="system" selectedImage="safari" id="0lL-vg-rDM"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="mapView" destination="Jja-DL-Ao6" id="kWv-wM-SbL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ffy-hC-LJF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2679.7101449275365" y="83.705357142857139"/>
         </scene>
         <!--Title-->
         <scene sceneID="sod-gq-Vpl">
@@ -211,6 +244,7 @@
         <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="level" catalog="system" width="128" height="57"/>
         <image name="list.bullet.rectangle" catalog="system" width="128" height="93"/>
+        <image name="safari" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25B15BAE28D877C00006E9FB /* MapsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B15BAD28D877C00006E9FB /* MapsControllers.swift */; };
+		25B15BB028D8B6DE0006E9FB /* MapsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B15BAF28D8B6DE0006E9FB /* MapsData.swift */; };
 		AF62CDF828D1C7AE003649D2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AF62CDF728D1C7AE003649D2 /* Kingfisher */; };
 		AF62CDFB28D1C7E6003649D2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = AF62CDFA28D1C7E6003649D2 /* Alamofire */; };
 		AF62CDFD28D1D851003649D2 /* RateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF62CDFC28D1D851003649D2 /* RateDTO.swift */; };
@@ -38,6 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		25B15BAD28D877C00006E9FB /* MapsControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsControllers.swift; sourceTree = "<group>"; };
+		25B15BAF28D8B6DE0006E9FB /* MapsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsData.swift; sourceTree = "<group>"; };
 		AF62CDFC28D1D851003649D2 /* RateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateDTO.swift; sourceTree = "<group>"; };
 		AF62CDFF28D1D86C003649D2 /* RatesInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesInfoDTO.swift; sourceTree = "<group>"; };
 		AF62CE0228D1D96C003649D2 /* RateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateCell.swift; sourceTree = "<group>"; };
@@ -123,6 +127,7 @@
 				AFA321C328D1AC85007D100E /* FeedController.swift */,
 				AF8FA5A728D1AED200818FDA /* CurrencyController.swift */,
 				AF74FDEC28D2480800789177 /* FullNewsController.swift */,
+				25B15BAD28D877C00006E9FB /* MapsControllers.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 				AFEC583F28D1C675005A2C7A /* NewsListDTO.swift */,
 				AF62CDFC28D1D851003649D2 /* RateDTO.swift */,
 				AF62CDFF28D1D86C003649D2 /* RatesInfoDTO.swift */,
+				25B15BAF28D8B6DE0006E9FB /* MapsData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -300,6 +306,7 @@
 				AFA321C428D1AC85007D100E /* FeedController.swift in Sources */,
 				AFA321C028D1AC85007D100E /* AppDelegate.swift in Sources */,
 				AFEC583328D1B608005A2C7A /* CommonCell.swift in Sources */,
+				25B15BB028D8B6DE0006E9FB /* MapsData.swift in Sources */,
 				AF8FA5A828D1AED200818FDA /* CurrencyController.swift in Sources */,
 				AFEC584028D1C675005A2C7A /* NewsListDTO.swift in Sources */,
 				AF74FDFC28D24F6300789177 /* NewsBodyCell.swift in Sources */,
@@ -312,6 +319,7 @@
 				AFEC582E28D1B08F005A2C7A /* NewsCell.swift in Sources */,
 				AF74FDF628D24D5000789177 /* NewsTitleCell.swift in Sources */,
 				AF62CE0028D1D86C003649D2 /* RatesInfoDTO.swift in Sources */,
+				25B15BAE28D877C00006E9FB /* MapsControllers.swift in Sources */,
 				AF74FDED28D2480800789177 /* FullNewsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
