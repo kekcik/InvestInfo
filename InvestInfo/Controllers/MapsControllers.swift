@@ -10,6 +10,10 @@ import MapKit
 
 final class MapsController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
+    private let plusButton = UIButton()
+    private let currentPositionButton = UIButton()
+    private let minusButton = UIButton()
+    private let buttonsStack = UIStackView()
     
     private var locationManager = CLLocationManager()
     private var currentCoordinate: CLLocationCoordinate2D?
@@ -17,6 +21,7 @@ final class MapsController: UIViewController {
     override func viewDidLoad() {
         setupLocation()
         setupMapView()
+        setupButtons()
         registerAnnotationViewClasses()
     }
     
@@ -57,7 +62,6 @@ extension MapsController: MKMapViewDelegate {
             return
         }
         showDetails(mapsItem, view.annotation)
-//        showItemDetails(mapsItem.id)
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
@@ -90,6 +94,30 @@ private extension MapsController {
         obtainMapsItems(for: mapView.centerCoordinate)
     }
     
+    func setupButtons() {
+        
+        plusButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        plusButton.addTarget(self, action: #selector(zoomIn), for: .touchUpInside)
+        currentPositionButton.setImage(UIImage(systemName: "person.crop.circle"), for: .normal)
+        currentPositionButton.addTarget(self, action: #selector(goToCurrentPosition), for: .touchUpInside)
+        minusButton.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
+        minusButton.addTarget(self, action: #selector(zoomOut), for: .touchUpInside)
+        [ plusButton, currentPositionButton, minusButton ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.widthAnchor.constraint(equalToConstant: 30).isActive = true
+            $0.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            buttonsStack.addArrangedSubview($0)
+        }
+        buttonsStack.axis = .vertical
+        buttonsStack.spacing = 8
+        buttonsStack.distribution = .fillEqually
+        buttonsStack.translatesAutoresizingMaskIntoConstraints = false
+        mapView.addSubview(buttonsStack)
+        buttonsStack.centerYAnchor.constraint(equalTo: mapView.centerYAnchor).isActive = true
+        buttonsStack.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -16).isActive = true
+        
+    }
+    
     func registerAnnotationViewClasses() {
         mapView.register(MapsItemView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     }
@@ -99,11 +127,32 @@ private extension MapsController {
         locationManager.delegate = nil
     }
     
+    // MARK: - Zooming
+    @objc func zoomIn() {
+        var region = mapView.region
+        region.span.latitudeDelta /= 2.0
+        region.span.longitudeDelta /= 2.0
+        mapView.setRegion(region, animated: true)
+    }
+    
+    @objc func zoomOut() {
+        var region = mapView.region
+        region.span.latitudeDelta = min(region.span.latitudeDelta * 2.0, 180.0)
+        region.span.longitudeDelta = min(region.span.longitudeDelta * 2.0, 180.0)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    @objc func goToCurrentPosition() {
+        guard let currentCoordinate = currentCoordinate else { return }
+        zoomTo(currentCoordinate)
+    }
+    
     func zoomTo(_ coordinate: CLLocationCoordinate2D) {
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         mapView.setRegion(region, animated: true)
     }
     
+    //MARK: - AddItems
     func obtainMapsItems(for coordinate: CLLocationCoordinate2D) {
         DispatchQueue.main.async { [weak self] in
             let mapsItems = MapsDataSource.markers.compactMap { MapsItem($0) }
