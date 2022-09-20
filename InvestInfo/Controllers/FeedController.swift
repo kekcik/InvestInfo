@@ -42,15 +42,15 @@ class FeedController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("didSelectRowAt ", indexPath.row)
         if vms[indexPath.row] is NewsCellVM {
-            let nextVC = storyboard?.instantiateViewController(withIdentifier: "FullNewsController")
-            present(nextVC!, animated: true)
+            guard let nextVC = storyboard?.instantiateViewController(withIdentifier: "FullNewsController") as? FullNewsController else { return }
+            nextVC.viewModel = vms[indexPath.row] as? NewsCellVM
+            present(nextVC, animated: true)
         }
     }
 
     func fetchData() {
-        AF.request("http://134.209.245.43:8080").responseDecodable(of: NewsListDTO.self) { response in
+        AF.request(Constants.baseHost).responseDecodable(of: NewsListDTO.self) { response in
             debugPrint("Response: \(response)")
             switch response.result {
             case .success(let data):
