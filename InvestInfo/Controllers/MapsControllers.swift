@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 
 final class MapsController: UIViewController {
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet private weak var mapView: MKMapView!
     private let plusButton = UIButton()
     private let currentPositionButton = UIButton()
     private let minusButton = UIButton()
@@ -49,10 +49,6 @@ extension MapsController: MKMapViewDelegate {
         return MapsItemView(annotation: annotation)
     }
     
-    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-//        obtainMapsItems(for: mapView.centerCoordinate)
-    }
-    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let mapsItem = (view as? MapsItemViewProtocol)?.mapsItem else {
             /// если нажали на кластер, пробуем показать содержимое
@@ -62,18 +58,6 @@ extension MapsController: MKMapViewDelegate {
             return
         }
         showDetails(mapsItem, view.annotation)
-    }
-    
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-//        hideItemDetails()
-    }
-    
-    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-//        hideItemDetails()
-    }
-    
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-//        showClusterContent()
     }
 }
 
@@ -95,7 +79,6 @@ private extension MapsController {
     }
     
     func setupButtons() {
-        
         plusButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
         plusButton.addTarget(self, action: #selector(zoomIn), for: .touchUpInside)
         currentPositionButton.setImage(UIImage(systemName: "person.crop.circle"), for: .normal)
@@ -115,7 +98,6 @@ private extension MapsController {
         mapView.addSubview(buttonsStack)
         buttonsStack.centerYAnchor.constraint(equalTo: mapView.centerYAnchor).isActive = true
         buttonsStack.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -16).isActive = true
-        
     }
     
     func registerAnnotationViewClasses() {
@@ -147,8 +129,8 @@ private extension MapsController {
         zoomTo(currentCoordinate)
     }
     
-    func zoomTo(_ coordinate: CLLocationCoordinate2D) {
-        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+    func zoomTo(_ coordinate: CLLocationCoordinate2D, _ meters: Double = 500.0) {
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: meters, longitudinalMeters: meters)
         mapView.setRegion(region, animated: true)
     }
     
@@ -161,7 +143,7 @@ private extension MapsController {
     }
     
     func showDetails(_ mapsItem: MapsItem, _ annotation: MKAnnotation?) {
-        let vc = UIAlertController(title: "Отделение банка", message: "Меняем шило на мыло. Не забудь паспорт", preferredStyle: .actionSheet)
+        let vc = UIAlertController(title: "Обменный пункт в Отделении банка", message: "Меняем шило на мыло. Не забудь паспорт", preferredStyle: .actionSheet)
         vc.addAction(UIAlertAction(title: "Проложить маршрут", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             let routeInfo = RouteInfo(startPoint: self.currentCoordinate, endPoint: mapsItem.position)
