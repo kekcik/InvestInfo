@@ -159,7 +159,7 @@ private extension MapsController {
                                    preferredStyle: .actionSheet)
         vc.addAction(UIAlertAction(title: "Проложить маршрут", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
-            let routeInfo = RouteInfo(startPoint: self.currentCoordinate, endPoint: mapsItem.position)
+            let routeInfo = MapsRouteInfo(startPoint: self.currentCoordinate, endPoint: mapsItem.position)
             self.showMenu(routeInfo, annotation)
         }))
         vc.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { [weak self] _ in
@@ -168,11 +168,11 @@ private extension MapsController {
         present(vc, animated: true)
     }
     
-    func showMenu(_ routeInfo: RouteInfo, _ annotation: MKAnnotation?) {
+    func showMenu(_ routeInfo: MapsRouteInfo, _ annotation: MKAnnotation?) {
         let alertVC = UIAlertController(title: "Проложить маршрут".uppercased(),
                                         message: "Используй сторонние приложения или браузер",
                                         preferredStyle: .actionSheet)
-        RouteInfo.RouteKey.allCases.forEach {
+        MapsRouteInfo.RouteKey.allCases.forEach {
             let info = routeInfo.getInfo($0)
             alertVC.addAction(UIAlertAction(title: info.title, style: .default) { [weak self] _ in
                 self?.open(info.appURL, info.webURL)
