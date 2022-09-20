@@ -45,7 +45,7 @@ class CurrencyController: UITableViewController {
     
 
     func fetchData() {
-        AF.request("http://134.209.245.43:8080/rates/").responseDecodable(of: RatesInfoDTO.self) { response in
+        AF.request("\(Constants.baseHost)/rates/").responseDecodable(of: RatesInfoDTO.self) { response in
             debugPrint("Response: \(response)")
             switch response.result {
             case .success(let data):

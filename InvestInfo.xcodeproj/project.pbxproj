@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5014099728D9C7F0004523EA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014099628D9C7F0004523EA /* Utils.swift */; };
 		AF62CDF828D1C7AE003649D2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AF62CDF728D1C7AE003649D2 /* Kingfisher */; };
 		AF62CDFB28D1C7E6003649D2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = AF62CDFA28D1C7E6003649D2 /* Alamofire */; };
 		AF62CDFD28D1D851003649D2 /* RateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF62CDFC28D1D851003649D2 /* RateDTO.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5014099628D9C7F0004523EA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		AF62CDFC28D1D851003649D2 /* RateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateDTO.swift; sourceTree = "<group>"; };
 		AF62CDFF28D1D86C003649D2 /* RatesInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesInfoDTO.swift; sourceTree = "<group>"; };
 		AF62CE0228D1D96C003649D2 /* RateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateCell.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				AFA321BF28D1AC85007D100E /* AppDelegate.swift */,
 				AFA321C128D1AC85007D100E /* SceneDelegate.swift */,
 				AFA321C528D1AC85007D100E /* Main.storyboard */,
+				5014099628D9C7F0004523EA /* Utils.swift */,
 				AFA321C828D1AC87007D100E /* Assets.xcassets */,
 				AFA321CA28D1AC87007D100E /* LaunchScreen.storyboard */,
 				AFA321CD28D1AC87007D100E /* Info.plist */,
@@ -307,6 +310,7 @@
 				AF62CE0428D1D96C003649D2 /* RateCell.swift in Sources */,
 				AFA321C228D1AC85007D100E /* SceneDelegate.swift in Sources */,
 				AFEC583628D1B61B005A2C7A /* CommonCellVM.swift in Sources */,
+				5014099728D9C7F0004523EA /* Utils.swift in Sources */,
 				AFEC583A28D1BA81005A2C7A /* SpaceCell.swift in Sources */,
 				AFEC583E28D1C669005A2C7A /* NewsDTO.swift in Sources */,
 				AFEC582E28D1B08F005A2C7A /* NewsCell.swift in Sources */,

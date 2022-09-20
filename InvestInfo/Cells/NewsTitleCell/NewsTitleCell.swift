@@ -29,5 +29,4 @@ class NewsTitleCell: CommonCell {
         titleLabel.text = vm.title
         dateLabel.text = df.string(from: vm.date)
     }
-    
 }
