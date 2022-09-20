@@ -41,7 +41,7 @@ class TitleImageCell: CommonCell {
     override func update(with vm: CommonCellVM) {
         guard let vm = vm as? TitleImageCellVM else { return }
         
-        if let url = URL(string: "http://localhost:8080\(vm.imageUrl)") {
+        if let url = URL(string: "\(Constants.baseHost)\(vm.imageUrl)") {
             mainImageView.kf.indicatorType = .activity
             DispatchQueue.main.async {
                 self.mainImageView.kf.setImage(with: url) { result in

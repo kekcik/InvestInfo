@@ -50,7 +50,7 @@ class FeedController: UITableViewController {
     }
 
     func fetchData() {
-        AF.request("http://134.209.245.43:8080").responseDecodable(of: NewsListDTO.self) { response in
+        AF.request(Constants.baseHost).responseDecodable(of: NewsListDTO.self) { response in
             debugPrint("Response: \(response)")
             switch response.result {
             case .success(let data):
