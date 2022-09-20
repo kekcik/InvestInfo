@@ -8,5 +8,5 @@
 import Foundation
 
 struct Constants {
-    static let baseHost = "http://134.209.245.43:8080"
+    static let baseHost = "http://investinfo.freemyip.com"
 }

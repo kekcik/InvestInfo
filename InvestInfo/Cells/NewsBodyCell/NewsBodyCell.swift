@@ -15,24 +15,10 @@ struct NewsBodyCellVM: CommonCellVM {
 
 class NewsBodyCell: CommonCell {
 
-    
-
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+    @IBOutlet private var bodyLabel: UILabel!
     
     override func update(with vm: CommonCellVM) {
         guard let vm = vm as? NewsBodyCellVM else { return }
-        
-        
+        bodyLabel.text = vm.body
     }
-    
 }

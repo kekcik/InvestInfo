@@ -42,10 +42,10 @@ class FeedController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("didSelectRowAt ", indexPath.row)
         if vms[indexPath.row] is NewsCellVM {
-            let nextVC = storyboard?.instantiateViewController(withIdentifier: "FullNewsController")
-            present(nextVC!, animated: true)
+            guard let nextVC = storyboard?.instantiateViewController(withIdentifier: "FullNewsController") as? FullNewsController else { return }
+            nextVC.viewModel = vms[indexPath.row] as? NewsCellVM
+            present(nextVC, animated: true)
         }
     }
 
