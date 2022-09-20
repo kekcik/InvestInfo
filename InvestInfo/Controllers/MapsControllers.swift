@@ -14,18 +14,16 @@ final class MapsController: UIViewController {
     private let currentPositionButton = UIButton()
     private let minusButton = UIButton()
     private let buttonsStack = UIStackView()
-    
-    private var locationManager = CLLocationManager()
+    private let locationManager = CLLocationManager()
     private let defaultCoordinate = CLLocationCoordinate2D(latitude: 55.755786, longitude: 37.617633)
     private var currentCoordinate: CLLocationCoordinate2D? {
         didSet { currentPositionButton.isHidden = currentCoordinate == nil }
     }
-
+    
     override func viewDidLoad() {
         setupLocation()
         setupMapView()
         setupButtons()
-        registerAnnotationViewClasses()
     }
     
     deinit {
@@ -40,7 +38,6 @@ extension MapsController: CLLocationManagerDelegate {
         currentCoordinate = latestLocation.coordinate
         manager.stopUpdatingLocation()
         mapView.showsUserLocation = true
-        guard let currentCoordinate = currentCoordinate else { return }
         moveTo(currentCoordinate)
     }
 }
@@ -84,6 +81,7 @@ private extension MapsController {
     func setupMapView() {
         mapView.delegate = self
         mapView.showsCompass = true
+        mapView.register(MapsItemView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         obtainMapsItems(for: mapView.centerCoordinate)
     }
     
@@ -111,10 +109,6 @@ private extension MapsController {
         buttonsStack.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -8).isActive = true
     }
     
-    func registerAnnotationViewClasses() {
-        mapView.register(MapsItemView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-    }
-    
     func stopUpdatingLocation() {
         locationManager.stopUpdatingLocation()
         locationManager.delegate = nil
@@ -136,11 +130,11 @@ private extension MapsController {
     }
     
     @objc func goToCurrentPosition() {
-        guard let currentCoordinate = currentCoordinate else { return }
         moveTo(currentCoordinate)
     }
     
-    func moveTo(_ coordinate: CLLocationCoordinate2D, _ meters: Double = 500.0) {
+    func moveTo(_ coordinate: CLLocationCoordinate2D?, _ meters: Double = 500.0) {
+        guard let coordinate = coordinate else { return }
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: meters, longitudinalMeters: meters)
         mapView.setRegion(region, animated: true)
     }
@@ -154,35 +148,36 @@ private extension MapsController {
     }
     
     func showDetails(_ mapsItem: MapsItem, _ annotation: MKAnnotation?) {
-        let vc = UIAlertController(title: "Обменный пункт".uppercased(),
-                                   message: "Меняем шило на мыло. Не забудь паспорт",
-                                   preferredStyle: .actionSheet)
-        vc.addAction(UIAlertAction(title: "Проложить маршрут", style: .default, handler: { [weak self] _ in
+        let alert = UIAlertController(title: "Обменный пункт".uppercased(),
+                                      message: "Меняем шило на мыло. Не забудь паспорт",
+                                      preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Проложить маршрут", style: .default) { [weak self] _ in
             guard let self = self else { return }
             let routeInfo = MapsRouteInfo(startPoint: self.currentCoordinate, endPoint: mapsItem.position)
             self.showMenu(routeInfo, annotation)
-        }))
-        vc.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { [weak self] _ in
+        })
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel) { [weak self] _ in
             self?.mapView.deselectAnnotation(annotation, animated: true)
-        }))
-        present(vc, animated: true)
+        })
+        present(alert, animated: true)
     }
     
     func showMenu(_ routeInfo: MapsRouteInfo, _ annotation: MKAnnotation?) {
-        let alertVC = UIAlertController(title: "Проложить маршрут".uppercased(),
-                                        message: "Используй сторонние приложения или браузер",
-                                        preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Проложить маршрут".uppercased(),
+                                      message: "Используй сторонние приложения или браузер",
+                                      preferredStyle: .actionSheet)
         MapsRouteInfo.RouteKey.allCases.forEach {
             let info = routeInfo.getInfo($0)
-            alertVC.addAction(UIAlertAction(title: info.title, style: .default) { [weak self] _ in
-                self?.open(info.appURL, info.webURL)
-                self?.mapView.deselectAnnotation(annotation, animated: true)
+            alert.addAction(UIAlertAction(title: info.title, style: .default) { [weak self] _ in
+                guard let self = self else { return }
+                self.open(info.appURL, info.webURL)
+                self.mapView.deselectAnnotation(annotation, animated: true)
             })
         }
-        alertVC.addAction(UIAlertAction(title: "Отмена", style: .cancel) { [weak self] _ in
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel) { [weak self] _ in
             self?.mapView.deselectAnnotation(annotation, animated: true)
         })
-        present(alertVC, animated: true)
+        present(alert, animated: true)
     }
     
     func open(_ appURL: String, _ webURL: String) {
