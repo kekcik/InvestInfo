@@ -16,7 +16,10 @@ final class MapsController: UIViewController {
     private let buttonsStack = UIStackView()
     
     private var locationManager = CLLocationManager()
-    private var currentCoordinate: CLLocationCoordinate2D?
+    private let defaultCoordinate = CLLocationCoordinate2D(latitude: 55.755786, longitude: 37.617633)
+    private var currentCoordinate: CLLocationCoordinate2D? {
+        didSet { currentPositionButton.isHidden = currentCoordinate == nil }
+    }
 
     override func viewDidLoad() {
         setupLocation()
@@ -38,7 +41,7 @@ extension MapsController: CLLocationManagerDelegate {
         manager.stopUpdatingLocation()
         mapView.showsUserLocation = true
         guard let currentCoordinate = currentCoordinate else { return }
-        zoomTo(currentCoordinate)
+        moveTo(currentCoordinate)
     }
 }
 
@@ -61,12 +64,18 @@ extension MapsController: MKMapViewDelegate {
     }
 }
 
-
 // MARK: - Helper
 private extension MapsController {
     func setupLocation() {
         locationManager.requestWhenInUseAuthorization()
-        guard CLLocationManager.locationServicesEnabled() else { return }
+        guard
+            CLLocationManager.locationServicesEnabled(),
+            [.authorizedAlways, .authorizedWhenInUse, .notDetermined].contains(locationManager.authorizationStatus)
+        else {
+            currentCoordinate = nil
+            moveTo(defaultCoordinate)
+            return
+        }
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
@@ -79,16 +88,18 @@ private extension MapsController {
     }
     
     func setupButtons() {
-        plusButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
-        plusButton.addTarget(self, action: #selector(zoomIn), for: .touchUpInside)
-        currentPositionButton.setImage(UIImage(systemName: "person.crop.circle"), for: .normal)
-        currentPositionButton.addTarget(self, action: #selector(goToCurrentPosition), for: .touchUpInside)
-        minusButton.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
-        minusButton.addTarget(self, action: #selector(zoomOut), for: .touchUpInside)
-        [ plusButton, currentPositionButton, minusButton ].forEach {
+        let allButtons = [ plusButton, currentPositionButton, minusButton ]
+        let allImages = [ "plus.circle", "person.crop.circle", "minus.circle" ]
+        let allActions = [ #selector(zoomIn), #selector(goToCurrentPosition), #selector(zoomOut) ]
+        let config = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 40))
+        zip(allButtons, allImages).forEach { $0.setImage(UIImage(systemName: $1, withConfiguration: config), for: .normal) }
+        zip(allButtons, allActions).forEach { $0.addTarget(self, action: $1, for: .touchUpInside) }
+        currentPositionButton.isHidden = currentCoordinate == nil
+        allButtons.forEach {
+            $0.tintColor = .gray
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.widthAnchor.constraint(equalToConstant: 30).isActive = true
-            $0.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            $0.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            $0.heightAnchor.constraint(equalToConstant: 40).isActive = true
             buttonsStack.addArrangedSubview($0)
         }
         buttonsStack.axis = .vertical
@@ -97,7 +108,7 @@ private extension MapsController {
         buttonsStack.translatesAutoresizingMaskIntoConstraints = false
         mapView.addSubview(buttonsStack)
         buttonsStack.centerYAnchor.constraint(equalTo: mapView.centerYAnchor).isActive = true
-        buttonsStack.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -16).isActive = true
+        buttonsStack.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -8).isActive = true
     }
     
     func registerAnnotationViewClasses() {
@@ -126,10 +137,10 @@ private extension MapsController {
     
     @objc func goToCurrentPosition() {
         guard let currentCoordinate = currentCoordinate else { return }
-        zoomTo(currentCoordinate)
+        moveTo(currentCoordinate)
     }
     
-    func zoomTo(_ coordinate: CLLocationCoordinate2D, _ meters: Double = 500.0) {
+    func moveTo(_ coordinate: CLLocationCoordinate2D, _ meters: Double = 500.0) {
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: meters, longitudinalMeters: meters)
         mapView.setRegion(region, animated: true)
     }
@@ -143,21 +154,23 @@ private extension MapsController {
     }
     
     func showDetails(_ mapsItem: MapsItem, _ annotation: MKAnnotation?) {
-        let vc = UIAlertController(title: "Обменный пункт в Отделении банка", message: "Меняем шило на мыло. Не забудь паспорт", preferredStyle: .actionSheet)
+        let vc = UIAlertController(title: "Обменный пункт".uppercased(),
+                                   message: "Меняем шило на мыло. Не забудь паспорт",
+                                   preferredStyle: .actionSheet)
         vc.addAction(UIAlertAction(title: "Проложить маршрут", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             let routeInfo = RouteInfo(startPoint: self.currentCoordinate, endPoint: mapsItem.position)
             self.showMenu(routeInfo, annotation)
         }))
-        vc.addAction(UIAlertAction(title: "Не поеду никуда", style: .default, handler: { [weak self] _ in
+        vc.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { [weak self] _ in
             self?.mapView.deselectAnnotation(annotation, animated: true)
         }))
         present(vc, animated: true)
     }
     
     func showMenu(_ routeInfo: RouteInfo, _ annotation: MKAnnotation?) {
-        let alertVC = UIAlertController(title: "Проложить маршрут",
-                                        message: "используя сторонние приложения или браузер:",
+        let alertVC = UIAlertController(title: "Проложить маршрут".uppercased(),
+                                        message: "Используй сторонние приложения или браузер",
                                         preferredStyle: .actionSheet)
         RouteInfo.RouteKey.allCases.forEach {
             let info = routeInfo.getInfo($0)
@@ -178,119 +191,5 @@ private extension MapsController {
         } else if let url = URL(string: webURL) {
             UIApplication.shared.open(url, options: [:])
         }
-    }
-}
-
-// MARK: - MapsItem
-final class MapsItem: NSObject {
-    var position: CLLocationCoordinate2D
-    let ownerId: Int
-
-    init(_ position: CLLocationCoordinate2D, _ ownerId: Int) {
-        self.position = position
-        self.ownerId = ownerId
-    }
-    
-    init(_ mapsData: MapsData) {
-        self.position = CLLocationCoordinate2D(latitude: mapsData.latitude, longitude: mapsData.longitude)
-        self.ownerId = mapsData.ownerId
-    }
-}
-
-extension MapsItem: MKAnnotation {
-    @objc dynamic var coordinate: CLLocationCoordinate2D {
-        get { return position }
-        set { position = newValue }
-    }
-}
-
-// MARK: - MapsItemViewProtocol
-protocol MapsItemViewProtocol where Self: MKMarkerAnnotationView {
-    var mapsItem: MapsItem? { get }
-}
-
-// MARK: - MapsItemView
-final class MapsItemView: MKMarkerAnnotationView, MapsItemViewProtocol {
-    static let reuseID = "mapsItem"
-    private(set) var mapsItem: MapsItem?
-    
-    init(annotation: MKAnnotation?) {
-        super.init(annotation: annotation, reuseIdentifier: MapsItemView.reuseID)
-        clusteringIdentifier = MapsItemView.reuseID
-        guard let mapsItem = annotation as? MapsItem else { return }
-        self.mapsItem = mapsItem
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForDisplay() {
-        super.prepareForDisplay()
-        displayPriority = .defaultHigh
-        markerTintColor = .red
-        glyphImage = UIImage(systemName: "repeat.circle")
-    }
-}
-
-// MARK: - RouteInfo
-struct RouteInfo {
-    let startPoint, endPoint: CLLocationCoordinate2D?
-    
-    enum RouteKey: String, CaseIterable {
-        case yandexMaps, appleMaps, googleMaps, doubleGis
-    }
-    
-    struct MapsRouteInfo {
-        let title, name, appURL, webURL: String
-    }
-    
-    func getInfo(_ key: RouteKey) -> MapsRouteInfo {
-        let start = joinText(getText(from: startPoint?.latitude), getText(from: startPoint?.longitude))
-        let end =   joinText(getText(from: endPoint?.latitude), getText(from: endPoint?.longitude))
-        let start2Gis = joinText(getText(from: startPoint?.longitude), getText(from: startPoint?.latitude))
-        let end2Gis =   joinText(getText(from: endPoint?.longitude), getText(from: endPoint?.latitude))
-        
-        switch key {
-        case .yandexMaps:
-            let suffix = start.isEmpty ?
-            ["~", end].joined() : [start, end].joined(separator: "~")
-            let appURL = ["yandexmaps://maps.yandex.ru/?rtext=", suffix].joined()
-            let webURL = ["https://yandex.ru/maps/?rtext=", suffix].joined()
-            return MapsRouteInfo(title: "Яндекс.Карты", name: "ЯндексКарты", appURL: appURL, webURL: webURL)
-        case .appleMaps:
-            let suffix = start.isEmpty ?
-            ["daddr=", end].joined() : ["saddr=", start, "&daddr=", end].joined()
-            let appURL = ["maps://?", suffix].joined()
-            let webURL = ["https://maps.apple.com/?", suffix].joined()
-            return MapsRouteInfo(title: "Карты", name: "AppleMaps", appURL: appURL, webURL: webURL)
-        case .googleMaps:
-            let appSuffix = start.isEmpty ?
-            ["daddr=", end].joined() : ["saddr=", start, "&daddr=", end].joined()
-            let webSuffix = start.isEmpty ?
-            ["/", end].joined() : [start, end].joined(separator: "/")
-            let appURL = ["comgooglemaps://?", appSuffix].joined()
-            let webURL = ["https://google.com/maps/dir/", webSuffix].joined()
-            return MapsRouteInfo(title: "Google Maps", name: "GoogleMaps", appURL: appURL, webURL: webURL)
-        case .doubleGis:
-            let suffix = start2Gis.isEmpty ?
-            ["2gis.ru/routeSearch/rsType/car/to/", end2Gis].joined() :
-            ["2gis.ru/routeSearch/rsType/car/from/", start2Gis, "/to/", end2Gis].joined()
-            let appURL = ["dgis://", suffix].joined()
-            let webURL = ["https://", suffix].joined()
-            return MapsRouteInfo(title: "2ГИС", name: "2ГИС", appURL: appURL, webURL: webURL)
-        }
-    }
-}
-
-private extension RouteInfo {
-    func getText(from: Double?) -> String? {
-        guard let from = from else { return nil }
-        return String(describing: from)
-    }
-    
-    func joinText(_ text1: String?, _ text2: String?) -> String {
-        guard let text1 = text1, let text2 = text2 else { return "" }
-        return [text1, text2].joined(separator: ",")
     }
 }
