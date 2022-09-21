@@ -20,6 +20,7 @@ final class SwitcherCell: CommonCell, CommonCellOutProtocol {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         nameLabel.font = .systemFont(ofSize: 17)
         nameLabel.numberOfLines = 0
         switcher.addTarget(self, action: #selector(switcherChange(_:)), for: .valueChanged)
