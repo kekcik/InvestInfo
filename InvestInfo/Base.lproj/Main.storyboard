@@ -23,7 +23,7 @@
                         <segue destination="aeQ-cA-JH3" kind="relationship" relationship="viewControllers" id="5ND-24-ZQl"/>
                         <segue destination="C0y-lD-56Q" kind="relationship" relationship="viewControllers" id="CKR-Fu-vjv"/>
                         <segue destination="UqG-ja-lHe" kind="relationship" relationship="viewControllers" id="3DE-aV-LwB"/>
-                        <segue destination="422-oo-uf5" kind="relationship" relationship="viewControllers" id="mMa-Ys-M9q"/>
+                        <segue destination="nXO-34-wQI" kind="relationship" relationship="viewControllers" id="3z2-8v-lI9"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O6D-2x-u9e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -47,7 +47,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jcy-UW-gci" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="588" y="84"/>
+            <point key="canvasLocation" x="148" y="84"/>
         </scene>
         <!--Курсы -->
         <scene sceneID="7mw-fa-Sqx">
@@ -76,12 +76,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pRo-x2-2ty" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1497.1014492753625" y="795.53571428571422"/>
+            <point key="canvasLocation" x="148" y="796"/>
         </scene>
-        <!--Settings-->
+        <!--Настройки-->
         <scene sceneID="uuE-Jp-TrR">
             <objects>
-                <tableViewController id="422-oo-uf5" sceneMemberID="viewController">
+                <tableViewController id="422-oo-uf5" customClass="SettingsController" customModule="InvestInfo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="jr8-u4-x8N">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -101,12 +101,11 @@
                             <outlet property="delegate" destination="422-oo-uf5" id="BBS-B7-0pI"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Settings" image="gearshape" catalog="system" id="QZD-LM-WgX"/>
-                    <navigationItem key="navigationItem" id="a4Z-iY-PFn"/>
+                    <navigationItem key="navigationItem" title="Настройки" id="a4Z-iY-PFn"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NKB-KY-Gyz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1677" y="84"/>
+            <point key="canvasLocation" x="1683" y="796"/>
         </scene>
         <!--Адреса-->
         <scene sceneID="YPF-MB-KEY">
@@ -137,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ffy-hC-LJF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2679.7101449275365" y="83.705357142857139"/>
+            <point key="canvasLocation" x="906" y="84"/>
         </scene>
         <!--Title-->
         <scene sceneID="sod-gq-Vpl">
@@ -195,7 +194,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6eG-Tb-Ebd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="310.14492753623193" y="795.53571428571422"/>
+            <point key="canvasLocation" x="-600" y="796"/>
         </scene>
         <!--Лента-->
         <scene sceneID="cNo-eh-LbZ">
@@ -218,11 +217,13 @@
             </objects>
             <point key="canvasLocation" x="-600" y="84"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Настройки-->
         <scene sceneID="3J4-zy-E9f">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nXO-34-wQI" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Настройки" image="gearshape" catalog="system" id="QZD-LM-WgX"/>
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mRE-OA-KRi">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -234,12 +235,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qcp-BW-kX8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2586.9565217391305" y="803.57142857142856"/>
+            <point key="canvasLocation" x="1684" y="84"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="mMa-Ys-M9q"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="level" catalog="system" width="128" height="57"/>
