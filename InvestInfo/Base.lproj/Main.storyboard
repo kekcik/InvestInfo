@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +22,8 @@
                     <connections>
                         <segue destination="aeQ-cA-JH3" kind="relationship" relationship="viewControllers" id="5ND-24-ZQl"/>
                         <segue destination="C0y-lD-56Q" kind="relationship" relationship="viewControllers" id="CKR-Fu-vjv"/>
-                        <segue destination="nXO-34-wQI" kind="relationship" relationship="viewControllers" id="GyY-7I-3Lj"/>
+                        <segue destination="UqG-ja-lHe" kind="relationship" relationship="viewControllers" id="3DE-aV-LwB"/>
+                        <segue destination="nXO-34-wQI" kind="relationship" relationship="viewControllers" id="3z2-8v-lI9"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O6D-2x-u9e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -103,7 +105,38 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NKB-KY-Gyz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="906" y="796"/>
+            <point key="canvasLocation" x="1683" y="796"/>
+        </scene>
+        <!--Адреса-->
+        <scene sceneID="YPF-MB-KEY">
+            <objects>
+                <viewController id="UqG-ja-lHe" customClass="MapsController" customModule="InvestInfo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lOK-WJ-TRI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Jja-DL-Ao6">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                            </mapView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="68T-99-oOl"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="68T-99-oOl" firstAttribute="trailing" secondItem="Jja-DL-Ao6" secondAttribute="trailing" id="4Rh-3d-nVP"/>
+                            <constraint firstItem="Jja-DL-Ao6" firstAttribute="top" secondItem="lOK-WJ-TRI" secondAttribute="top" id="9UW-YV-8i8"/>
+                            <constraint firstItem="68T-99-oOl" firstAttribute="bottom" secondItem="Jja-DL-Ao6" secondAttribute="bottom" id="cGz-8Z-s3q"/>
+                            <constraint firstItem="Jja-DL-Ao6" firstAttribute="leading" secondItem="68T-99-oOl" secondAttribute="leading" id="d3f-SW-01M"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Адреса" image="safari" catalog="system" selectedImage="safari" id="0lL-vg-rDM"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="mapView" destination="Jja-DL-Ao6" id="kWv-wM-SbL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ffy-hC-LJF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="906" y="84"/>
         </scene>
         <!--Title-->
         <scene sceneID="sod-gq-Vpl">
@@ -202,13 +235,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qcp-BW-kX8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="906" y="84"/>
+            <point key="canvasLocation" x="1684" y="84"/>
         </scene>
     </scenes>
     <resources>
         <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="level" catalog="system" width="128" height="57"/>
         <image name="list.bullet.rectangle" catalog="system" width="128" height="93"/>
+        <image name="safari" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
