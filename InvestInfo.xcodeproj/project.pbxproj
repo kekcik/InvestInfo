@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25D7DE5328DA1A1E00888F5A /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE5228DA1A1E00888F5A /* SettingsController.swift */; };
+		25D7DE5528DA1B1200888F5A /* SwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE5428DA1B1200888F5A /* SwitcherCell.swift */; };
 		5014099728D9C7F0004523EA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014099628D9C7F0004523EA /* Utils.swift */; };
 		AF62CDF828D1C7AE003649D2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AF62CDF728D1C7AE003649D2 /* Kingfisher */; };
 		AF62CDFB28D1C7E6003649D2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = AF62CDFA28D1C7E6003649D2 /* Alamofire */; };
@@ -39,6 +41,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		25D7DE5228DA1A1E00888F5A /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		25D7DE5428DA1B1200888F5A /* SwitcherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitcherCell.swift; sourceTree = "<group>"; };
 		5014099628D9C7F0004523EA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		AF62CDFC28D1D851003649D2 /* RateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateDTO.swift; sourceTree = "<group>"; };
 		AF62CDFF28D1D86C003649D2 /* RatesInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesInfoDTO.swift; sourceTree = "<group>"; };
@@ -83,6 +87,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25D7DE5628DA1B1C00888F5A /* SwitcherCell */ = {
+			isa = PBXGroup;
+			children = (
+				25D7DE5428DA1B1200888F5A /* SwitcherCell.swift */,
+			);
+			path = SwitcherCell;
+			sourceTree = "<group>";
+		};
 		AF62CE0128D1D94E003649D2 /* RateCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +137,7 @@
 				AFA321C328D1AC85007D100E /* FeedController.swift */,
 				AF8FA5A728D1AED200818FDA /* CurrencyController.swift */,
 				AF74FDEC28D2480800789177 /* FullNewsController.swift */,
+				25D7DE5228DA1A1E00888F5A /* SettingsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -172,6 +185,7 @@
 				AFEC583728D1BA71005A2C7A /* SpaceCell */,
 				AFEC583028D1B358005A2C7A /* NewsCell */,
 				AF62CE0128D1D94E003649D2 /* RateCell */,
+				25D7DE5628DA1B1C00888F5A /* SwitcherCell */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -305,6 +319,7 @@
 				AFEC583328D1B608005A2C7A /* CommonCell.swift in Sources */,
 				AF8FA5A828D1AED200818FDA /* CurrencyController.swift in Sources */,
 				AFEC584028D1C675005A2C7A /* NewsListDTO.swift in Sources */,
+				25D7DE5528DA1B1200888F5A /* SwitcherCell.swift in Sources */,
 				AF74FDFC28D24F6300789177 /* NewsBodyCell.swift in Sources */,
 				AF74FDF128D24D3700789177 /* TitleImageCell.swift in Sources */,
 				AF62CE0428D1D96C003649D2 /* RateCell.swift in Sources */,
@@ -314,6 +329,7 @@
 				AFEC583A28D1BA81005A2C7A /* SpaceCell.swift in Sources */,
 				AFEC583E28D1C669005A2C7A /* NewsDTO.swift in Sources */,
 				AFEC582E28D1B08F005A2C7A /* NewsCell.swift in Sources */,
+				25D7DE5328DA1A1E00888F5A /* SettingsController.swift in Sources */,
 				AF74FDF628D24D5000789177 /* NewsTitleCell.swift in Sources */,
 				AF62CE0028D1D86C003649D2 /* RatesInfoDTO.swift in Sources */,
 				AF74FDED28D2480800789177 /* FullNewsController.swift in Sources */,
