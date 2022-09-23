@@ -23,6 +23,8 @@
 		25D7DE5D28DB18D300888F5A /* MapsRouteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE5A28DB18D300888F5A /* MapsRouteInfo.swift */; };
 		25D7DE5F28DB18E500888F5A /* MapsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE5E28DB18E500888F5A /* MapsControllers.swift */; };
 		25D7DE6128DB18F500888F5A /* MapsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE6028DB18F500888F5A /* MapsData.swift */; };
+		25D7DE6328DC618700888F5A /* SettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE6228DC618700888F5A /* SettingsDataSource.swift */; };
+		25D7DE6528DC8EE300888F5A /* UserDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE6428DC8EE300888F5A /* UserDetailsCell.swift */; };
 		5014099728D9C7F0004523EA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014099628D9C7F0004523EA /* Utils.swift */; };
 		AF62CDF828D1C7AE003649D2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AF62CDF728D1C7AE003649D2 /* Kingfisher */; };
 		AF62CDFB28D1C7E6003649D2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = AF62CDFA28D1C7E6003649D2 /* Alamofire */; };
@@ -62,6 +64,8 @@
 		25D7DE5A28DB18D300888F5A /* MapsRouteInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsRouteInfo.swift; sourceTree = "<group>"; };
 		25D7DE5E28DB18E500888F5A /* MapsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsControllers.swift; sourceTree = "<group>"; };
 		25D7DE6028DB18F500888F5A /* MapsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsData.swift; sourceTree = "<group>"; };
+		25D7DE6228DC618700888F5A /* SettingsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataSource.swift; sourceTree = "<group>"; };
+		25D7DE6428DC8EE300888F5A /* UserDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsCell.swift; sourceTree = "<group>"; };
 		5014099628D9C7F0004523EA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		AF62CDFC28D1D851003649D2 /* RateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateDTO.swift; sourceTree = "<group>"; };
 		AF62CDFF28D1D86C003649D2 /* RatesInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesInfoDTO.swift; sourceTree = "<group>"; };
@@ -120,8 +124,17 @@
 				25D7DE5828DB18D300888F5A /* MapsItem.swift */,
 				25D7DE5928DB18D300888F5A /* MapsDataSource.swift */,
 				25D7DE5A28DB18D300888F5A /* MapsRouteInfo.swift */,
+				25D7DE6228DC618700888F5A /* SettingsDataSource.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		25D7DE6628DC8EE900888F5A /* UserDetails */ = {
+			isa = PBXGroup;
+			children = (
+				25D7DE6428DC8EE300888F5A /* UserDetailsCell.swift */,
+			);
+			path = UserDetails;
 			sourceTree = "<group>";
 		};
 		AF62CE0128D1D94E003649D2 /* RateCell */ = {
@@ -217,6 +230,7 @@
 				AFEC583028D1B358005A2C7A /* NewsCell */,
 				AF62CE0128D1D94E003649D2 /* RateCell */,
 				25D7DE5628DA1B1C00888F5A /* SwitcherCell */,
+				25D7DE6628DC8EE900888F5A /* UserDetails */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -366,9 +380,11 @@
 				AFEC583628D1B61B005A2C7A /* CommonCellVM.swift in Sources */,
 				5014099728D9C7F0004523EA /* Utils.swift in Sources */,
 				AFEC583A28D1BA81005A2C7A /* SpaceCell.swift in Sources */,
+				25D7DE6528DC8EE300888F5A /* UserDetailsCell.swift in Sources */,
 				25B15BBC28D9CBEA0006E9FB /* (null) in Sources */,
 				25D7DE5F28DB18E500888F5A /* MapsControllers.swift in Sources */,
 				AFEC583E28D1C669005A2C7A /* NewsDTO.swift in Sources */,
+				25D7DE6328DC618700888F5A /* SettingsDataSource.swift in Sources */,
 				25D7DE4D28D9F63900888F5A /* (null) in Sources */,
 				AFEC582E28D1B08F005A2C7A /* NewsCell.swift in Sources */,
 				25D7DE5328DA1A1E00888F5A /* SettingsController.swift in Sources */,
