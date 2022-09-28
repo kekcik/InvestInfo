@@ -21,9 +21,9 @@ final class MapsController: UIViewController {
     }
     
     override func viewDidLoad() {
-        setupLocation()
         setupMapView()
         setupButtons()
+        setupLocation()
     }
     
     deinit {
@@ -63,24 +63,9 @@ extension MapsController: MKMapViewDelegate {
 
 // MARK: - Helper
 private extension MapsController {
-    func setupLocation() {
-        locationManager.requestWhenInUseAuthorization()
-        guard
-            CLLocationManager.locationServicesEnabled(),
-            [.authorizedAlways, .authorizedWhenInUse, .notDetermined].contains(locationManager.authorizationStatus)
-        else {
-            currentCoordinate = nil
-            moveTo(defaultCoordinate)
-            return
-        }
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-    }
-    
     func setupMapView() {
         mapView.delegate = self
-        mapView.showsCompass = true
+        mapView.showsCompass = false
         mapView.register(MapsItemView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         obtainMapsItems(for: mapView.centerCoordinate)
     }
@@ -107,6 +92,21 @@ private extension MapsController {
         mapView.addSubview(buttonsStack)
         buttonsStack.centerYAnchor.constraint(equalTo: mapView.centerYAnchor).isActive = true
         buttonsStack.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -8).isActive = true
+    }
+    
+    func setupLocation() {
+        locationManager.requestWhenInUseAuthorization()
+        guard
+            CLLocationManager.locationServicesEnabled(),
+            [.authorizedAlways, .authorizedWhenInUse, .notDetermined].contains(locationManager.authorizationStatus)
+        else {
+            currentCoordinate = nil
+            moveTo(defaultCoordinate)
+            return
+        }
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
     }
     
     func stopUpdatingLocation() {
