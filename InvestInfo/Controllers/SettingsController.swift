@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import AVFoundation
+import Photos
 
 final class SettingsController: UITableViewController {
     private var vms: [CommonCellVM] = []
@@ -56,8 +58,11 @@ extension SettingsController: SwitcherProtocol {
     func switcherChange(state: Bool, name: CommonCellNameProtocol) {
         guard let localName = (name as? SettingsCellName)?.name else { return }
         switch localName {
-        case .pushNotifications:    settingsDataSource.setValue(state, for: .pushNotifications)
-        case .createNews:           settingsDataSource.setValue(state, for: .createNews)
+        case .pushNotifications:
+            settingsDataSource.setValue(state, for: .pushNotifications)
+        case .createNews:
+            settingsDataSource.setValue(state, for: .createNews)
+            checkCameraAndPhotoLibraryPermitions {}
         default: break
         }
     }
@@ -67,33 +72,36 @@ extension SettingsController: SwitcherProtocol {
 extension SettingsController: UserDetailsEditingProtocol {
     func editAvatar() {
         guard isUserDetailsEditing else { return }
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            alert.addAction(UIAlertAction(title: "Сделать фото", style: .default) { [weak self] _ in
-                self?.showImagePicker(sourceType: .camera)
-            })
+        checkCameraAndPhotoLibraryPermitions { [weak self] in
+            guard let self = self else { return }
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            if UIImagePickerController.isSourceTypeAvailable(.camera), case .authorized = AVCaptureDevice.authorizationStatus(for: .video) {
+                alert.addAction(UIAlertAction(title: "Сделать фото", style: .default) { [weak self] _ in
+                    self?.showImagePicker(sourceType: .camera)
+                })
+            }
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary), case .authorized = PHPhotoLibrary.authorizationStatus() {
+                alert.addAction(UIAlertAction(title: "Выбрать из Ваших фото", style: .default) { [weak self] _ in
+                    self?.showImagePicker(sourceType: .photoLibrary)
+                })
+            }
+            if self.settingsDataSource.getValue(.avatarAvailable) {
+                alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+                    self?.showRemovingPhotoAlert()
+                })
+            }
+            if alert.actions.isEmpty {
+                self.showGoToSettingsAlert()
+            } else {
+                alert.addAction(self.cancelAction)
+                self.present(alert, animated: true)
+            }
         }
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            alert.addAction(UIAlertAction(title: "Выбрать из галереи", style: .default) { [weak self] _ in
-                self?.showImagePicker(sourceType: .photoLibrary)
-            })
-        }
-        if settingsDataSource.getValue(.avatarAvailable) {
-            alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
-                self?.showRemovingPhotoAlert()
-            })
-        }
-        if !alert.actions.isEmpty {
-            alert.addAction(cancelAction)
-        }
-        present(alert, animated: true)
     }
     
     func editUserName() {
         guard isUserDetailsEditing else { return }
-        let alert = UIAlertController(title: "Имя пользователя",
-                                      message: "поможет в общении",
-                                      preferredStyle: .alert)
+        let alert = UIAlertController(title: "Имя пользователя", message: "поможет в общении", preferredStyle: .alert)
         alert.addTextField { [weak self] textField in
             textField.delegate = self
             textField.text = self?.settingsDataSource.getUserName()
@@ -149,6 +157,16 @@ private extension SettingsController {
         ]
     }
     
+    func checkCameraAndPhotoLibraryPermitions(completion: @escaping () -> Void) {
+        AVCaptureDevice.requestAccess(for: .video) { _ in
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { _ in
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
+        }
+    }
+    
     func showImagePicker(sourceType: UIImagePickerController.SourceType) {
         imagePicker.delegate = self
         imagePicker.sourceType = sourceType
@@ -179,6 +197,17 @@ private extension SettingsController {
         settingsDataSource.setAvatar(data: data)
         self.updateData()
         self.tableView.reloadData()
+    }
+    
+    func showGoToSettingsAlert() {
+        let message = "Ранее, Вы запретили использовать камеру или Ваши фото. Для изменения нужно перейти в Настройки"
+        let alert = UIAlertController(title: "Внимание!", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Перейти", style: .default) { action in
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(url, options: [:])
+        })
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
 }
 
