@@ -8,6 +8,10 @@ struct ButtonCellVM: CommonCellVM, NameableCellVM, HeightableCellVM {
     var isEnable = false
 }
 
+protocol ButtonCellVCProtocol where Self: UIViewController {
+    func primaryButtonTap()
+}
+
 final class ButtonCell: CommonCell, CommonCellOutProtocol {
     weak var parentViewController: UIViewController?
     private let mainButton = UIButton()
@@ -33,7 +37,6 @@ final class ButtonCell: CommonCell, CommonCellOutProtocol {
     }
     
     @objc private func buttonTap() {
-        //TODO: Заменить на УНИВЕРСАЛЬНОЕ РЕШЕНИЕ!
-        (parentViewController as? AddNewsInputProtocol)?.sendButtonTap()
+        (parentViewController as? ButtonCellVCProtocol)?.primaryButtonTap()
     }
 }

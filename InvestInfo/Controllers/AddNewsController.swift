@@ -11,7 +11,6 @@ protocol AddNewsInputProtocol {
     func editImage()
     func setNews(title: String?)
     func setNews(text: String?)
-    func sendButtonTap()
 }
 
 final class AddNewsController: UITableViewController {
@@ -79,8 +78,11 @@ extension AddNewsController: AddNewsInputProtocol {
     func setNews(text: String?) {
         newsTemplate.text = text
     }
-    
-    func sendButtonTap() {
+}
+
+// MARK: - ButtonCellVCProtocol
+extension AddNewsController: ButtonCellVCProtocol {
+    func primaryButtonTap() {
         guard newsTemplate.isSendAvailable else { return }
         print(#function)
         //TODO: Готовы отправить новость на модерацию
