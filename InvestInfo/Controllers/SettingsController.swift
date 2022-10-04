@@ -6,19 +6,15 @@
 //
 
 import UIKit
-import AVFoundation
-import Photos
 
 final class SettingsController: UITableViewController {
     private var vms: [CommonCellVM] = []
-    private var settingsDataSource: SettingsDataProtocol = SettingsDataSouce()
-    private lazy var imagePicker: UIImagePickerController = { UIImagePickerController() }()
+    private var settingsDataSource: SettingsDataProtocol = SettingsDataSouce.shared
+    private lazy var addImageService: AddImageServiceProtocol = AddImageService()
     private var newUserName: String?
-    private let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
     private var isUserDetailsEditing = false {
         didSet {
-            let item: UIBarButtonItem.SystemItem = isUserDetailsEditing ? .done : .edit
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: item, target: self, action: #selector(editButtonTap))
+            updateNavBar()
         }
     }
     
@@ -28,7 +24,7 @@ final class SettingsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
-        setupNavBar()
+        updateNavBar()
         tableView.separatorStyle = .none
         tableView.register(SwitcherCell.self, forCellReuseIdentifier: String(describing: SwitcherCell.self))
         tableView.register(UserDetailsCell.self, forCellReuseIdentifier: String(describing: UserDetailsCell.self))
@@ -58,11 +54,8 @@ extension SettingsController: SwitcherProtocol {
     func switcherChange(state: Bool, name: CommonCellNameProtocol) {
         guard let localName = (name as? SettingsCellName)?.name else { return }
         switch localName {
-        case .pushNotifications:
-            settingsDataSource.setValue(state, for: .pushNotifications)
-        case .createNews:
-            settingsDataSource.setValue(state, for: .createNews)
-            checkCameraAndPhotoLibraryPermitions {}
+        case .pushNotifications:    settingsDataSource.setValue(state, for: .pushNotifications)
+        case .createNews:           settingsDataSource.setValue(state, for: .createNews)
         default: break
         }
     }
@@ -72,30 +65,8 @@ extension SettingsController: SwitcherProtocol {
 extension SettingsController: UserDetailsEditingProtocol {
     func editAvatar() {
         guard isUserDetailsEditing else { return }
-        checkCameraAndPhotoLibraryPermitions { [weak self] in
-            guard let self = self else { return }
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            if UIImagePickerController.isSourceTypeAvailable(.camera), case .authorized = AVCaptureDevice.authorizationStatus(for: .video) {
-                alert.addAction(UIAlertAction(title: "Сделать фото", style: .default) { [weak self] _ in
-                    self?.showImagePicker(sourceType: .camera)
-                })
-            }
-            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary), case .authorized = PHPhotoLibrary.authorizationStatus() {
-                alert.addAction(UIAlertAction(title: "Выбрать из Ваших фото", style: .default) { [weak self] _ in
-                    self?.showImagePicker(sourceType: .photoLibrary)
-                })
-            }
-            if self.settingsDataSource.getValue(.avatarAvailable) {
-                alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
-                    self?.showRemovingPhotoAlert()
-                })
-            }
-            if alert.actions.isEmpty {
-                self.showGoToSettingsAlert()
-            } else {
-                alert.addAction(self.cancelAction)
-                self.present(alert, animated: true)
-            }
+        addImageService.showAddImage(isAvailable: settingsDataSource.getValue(.avatarAvailable), from: self) { [weak self] in
+            self?.saveAvatar(Data())
         }
     }
     
@@ -106,12 +77,11 @@ extension SettingsController: UserDetailsEditingProtocol {
             textField.delegate = self
             textField.text = self?.settingsDataSource.getUserName()
         }
-        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: "Отменить", style: .cancel))
         alert.addAction(UIAlertAction(title: "Сохранить", style: .default) { [weak self] _ in
             guard let self = self, let newUserName = self.newUserName else { return }
             self.settingsDataSource.setUserName(newUserName)
-            self.updateData()
-            self.tableView.reloadData()
+            self.reload()
         })
         present(alert, animated: true)
     }
@@ -133,8 +103,9 @@ extension SettingsController: UITextFieldDelegate {
 
 // MARK: - Helper
 private extension SettingsController {
-    func setupNavBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTap))
+    func updateNavBar() {
+        let item: UIBarButtonItem.SystemItem = isUserDetailsEditing ? .done : .edit
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: item, target: self, action: #selector(editButtonTap))
     }
     
     @objc func editButtonTap() {
@@ -157,57 +128,15 @@ private extension SettingsController {
         ]
     }
     
-    func checkCameraAndPhotoLibraryPermitions(completion: @escaping () -> Void) {
-        AVCaptureDevice.requestAccess(for: .video) { _ in
-            PHPhotoLibrary.requestAuthorization(for: .readWrite) { _ in
-                DispatchQueue.main.async {
-                    completion()
-                }
-            }
-        }
-    }
-    
-    func showImagePicker(sourceType: UIImagePickerController.SourceType) {
-        imagePicker.delegate = self
-        imagePicker.sourceType = sourceType
-        if case .camera = sourceType {
-            imagePicker.cameraDevice = .front
-        }
-        present(imagePicker, animated: true)
-    }
-    
-    func showRemovingPhotoAlert() {
-        let alert = UIAlertController(title: "Удалить аватар?", message: nil, preferredStyle: .alert)
-        alert.addAction(cancelAction)
-        alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
-            self?.saveAvatar(Data())
-        })
-        present(alert, animated: true)
-    }
-    
-    func getCroppedImage(sourceImage: UIImage?) -> UIImage? {
-        guard let image = sourceImage else { return nil }
-        let newSize = CGSize(width: 100, height: 100)
-        let newImage = image.resizedImageWithinRect(rectSize: newSize)
-        return newImage.getSquaredImage(sourceImage: newImage)
-    }
-    
     func saveAvatar(_ data: Data) {
         settingsDataSource.setValue(data != Data(), for: .avatarAvailable)
         settingsDataSource.setAvatar(data: data)
-        self.updateData()
-        self.tableView.reloadData()
+        reload()
     }
     
-    func showGoToSettingsAlert() {
-        let message = "Ранее, Вы запретили использовать камеру или Ваши фото. Для изменения нужно перейти в Настройки"
-        let alert = UIAlertController(title: "Внимание!", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Перейти", style: .default) { action in
-            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-            UIApplication.shared.open(url, options: [:])
-        })
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
+    func reload() {
+        updateData()
+        tableView.reloadData()
     }
 }
 
@@ -215,7 +144,7 @@ private extension SettingsController {
 extension SettingsController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let image = info[.originalImage] as? UIImage, let data = getCroppedImage(sourceImage: image)?.pngData() {
+        if let image = info[.originalImage] as? UIImage, let data = image.getCroppedImage().pngData() {
             saveAvatar(data)
         }
         dismiss(animated: true)

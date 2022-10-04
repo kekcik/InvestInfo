@@ -8,9 +8,8 @@
 import UIKit
 import Alamofire
 
-class FeedController: UITableViewController {
-
-    var vms: [CommonCellVM] = []
+final class FeedController: UITableViewController {
+    private var vms: [CommonCellVM] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,32 +22,43 @@ class FeedController: UITableViewController {
         
         fetchData()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.rightBarButtonItem = SettingsDataSouce.shared.getValue(.createNews) ?
+        UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNews)) : nil
+    }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let vm = vms[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: vm.classId) as! CommonCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: vm.classId) as? CommonCell
+        else { return UITableViewCell() }
         cell.update(with: vm)
         return cell
     }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return vms.count
+        vms.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if vms[indexPath.row] is NewsCellVM {
-            guard let nextVC = storyboard?.instantiateViewController(withIdentifier: "FullNewsController") as? FullNewsController else { return }
-            nextVC.viewModel = vms[indexPath.row] as? NewsCellVM
-            present(nextVC, animated: true)
-        }
+        guard
+            let viewModel = vms[indexPath.row] as? NewsCellVM,
+            let nextVC = storyboard?.instantiateViewController(withIdentifier: "FullNewsController") as? FullNewsController
+        else { return }
+        nextVC.viewModel = viewModel
+        present(nextVC, animated: true)
     }
+}
 
+// MARK: - Helper
+private extension FeedController {
+    @objc func createNews() {
+        present(AddNewsController(), animated: true)
+    }
+    
     func fetchData() {
         AF.request(Constants.baseHost).responseDecodable(of: NewsListDTO.self) { response in
             debugPrint("Response: \(response)")
@@ -63,4 +73,3 @@ class FeedController: UITableViewController {
         }
     }
 }
-

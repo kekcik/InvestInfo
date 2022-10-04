@@ -26,7 +26,7 @@ extension UIImage {
     
     /// Returns a resized image that fits in rectSize, keeping it's aspect ratio
     /// Note that the new image size is not rectSize, but within it.
-    func resizedImageWithinRect(rectSize: CGSize) -> UIImage {
+    func resizedImageIn(rectSize: CGSize) -> UIImage {
         let widthFactor = size.width / rectSize.width
         let heightFactor = size.height / rectSize.height
         let resizeFactor = (size.height > size.width) ? heightFactor : widthFactor
@@ -44,8 +44,7 @@ extension UIImage {
         return UIImage(cgImage: imageRef)
     }
     
-    func getSquaredImage(sourceImage: UIImage?) -> UIImage? {
-        guard let image = sourceImage else { return nil }
+    func getSquared(image: UIImage) -> UIImage {
         guard image.size.height != image.size.width else { return image }
         
         let shortestSide = min(image.size.height, image.size.width)
@@ -58,5 +57,68 @@ extension UIImage {
         let y = image.size.height > image.size.width ? begin : 0
         
         return image.crop(rect: CGRect(x: round(x), y: round(y), width: shortestSide, height: shortestSide))
+    }
+    
+    func getCroppedImage() -> UIImage {
+        let newSize = CGSize(width: 100, height: 100)
+        let newImage = resizedImageIn(rectSize: newSize)
+        return getSquared(image: newImage)
+    }
+}
+
+extension UIView {
+    func rounded(_ cornerRadius: CGFloat = 15) {
+        layer.cornerRadius = cornerRadius
+    }
+    
+    func addManualResizing(
+        _ subview: UIView,
+        topConstant: CGFloat = 8,
+        bottomConstant: CGFloat = -8,
+        leadingConstant: CGFloat = 16,
+        trailingConstant: CGFloat = -16,
+        widthConstant: CGFloat? = nil,
+        heightConstant: CGFloat? = nil
+    ) {
+        addSubview(subview)
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        subview.topAnchor.constraint(equalTo: topAnchor, constant: topConstant).isActive = true
+        subview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: bottomConstant).isActive = true
+        subview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingConstant).isActive = true
+        subview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: trailingConstant).isActive = true
+        if let widthConstant = widthConstant {
+            subview.widthAnchor.constraint(equalToConstant: widthConstant).isActive = true
+        }
+        if let heightConstant = heightConstant {
+            subview.heightAnchor.constraint(equalToConstant: heightConstant).isActive = true
+        }
+    }
+}
+
+//TODO: Может стоит перейти на привычные нам регистрации по классам? Тогда надо поменять CommonCellVM
+
+protocol ReuseIdentifiable: AnyObject {
+    static func reuseIdentifier() -> String
+}
+
+
+extension ReuseIdentifiable {
+    static func reuseIdentifier() -> String {
+        NSStringFromClass(self)
+    }
+}
+
+extension UITableViewCell: ReuseIdentifiable {}
+
+extension UITableView {
+    func registerCellClass<T: UITableViewCell>(cellClass: T.Type) {
+        self.register(cellClass, forCellReuseIdentifier: cellClass.reuseIdentifier())
+    }
+    
+    func dequeueCellWithClass<T: UITableViewCell>(cellClass: T.Type, forIndexPath indexPath: IndexPath) -> T {
+        guard let cell = dequeueReusableCell(withIdentifier: cellClass.reuseIdentifier(), for: indexPath) as? T else {
+            fatalError("Error: cell with identifier: \(cellClass.reuseIdentifier()) for index path: \(indexPath) is not \(T.self)")
+        }
+        return cell
     }
 }

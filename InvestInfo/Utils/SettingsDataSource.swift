@@ -10,6 +10,8 @@ protocol SettingsDataProtocol {
 }
 
 final class SettingsDataSouce {
+    static let shared: SettingsDataProtocol = SettingsDataSouce()
+    private init() {}
     private let userDefaults = UserDefaults.standard
     private enum UserDetails: String, CaseIterable { case name, avatarData }
     enum Settings: String, CaseIterable { case avatarAvailable, pushNotifications, createNews }
