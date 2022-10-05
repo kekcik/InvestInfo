@@ -2,7 +2,7 @@ import Foundation
 
 protocol SettingsDataProtocol {
     func getAvatarData() -> Data?
-    func setAvatar(data: Data)
+    func setAvatar(data: Data?)
     func getUserName() -> String
     func setUserName(_ name: String)
     func getValue(_ settings: SettingsDataSouce.Settings) -> Bool
@@ -44,7 +44,7 @@ extension SettingsDataSouce: SettingsDataProtocol {
         avatarData
     }
     
-    func setAvatar(data: Data) {
+    func setAvatar(data: Data?) {
         avatarData = data
     }
     func getUserName() -> String {

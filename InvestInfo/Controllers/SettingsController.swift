@@ -66,7 +66,7 @@ extension SettingsController: UserDetailsEditingProtocol {
     func editAvatar() {
         guard isUserDetailsEditing else { return }
         addImageService.showAddImage(isAvailable: settingsDataSource.getValue(.avatarAvailable), from: self) { [weak self] in
-            self?.saveAvatar(Data())
+            self?.saveAvatar(nil)
         }
     }
     
@@ -128,8 +128,8 @@ private extension SettingsController {
         ]
     }
     
-    func saveAvatar(_ data: Data) {
-        settingsDataSource.setValue(data != Data(), for: .avatarAvailable)
+    func saveAvatar(_ data: Data?) {
+        settingsDataSource.setValue(data != nil, for: .avatarAvailable)
         settingsDataSource.setAvatar(data: data)
         reload()
     }
@@ -144,9 +144,7 @@ private extension SettingsController {
 extension SettingsController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let image = info[.originalImage] as? UIImage, let data = image.getCroppedImage().pngData() {
-            saveAvatar(data)
-        }
+        saveAvatar((info[.originalImage] as? UIImage)?.getCroppedImage().pngData())
         dismiss(animated: true)
     }
     

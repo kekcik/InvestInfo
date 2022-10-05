@@ -26,12 +26,12 @@ final class AddNewsController: UITableViewController {
     }
     private var newsTemplate = NewsTemplate() {
         didSet {
-            guard newsTemplate.isSendAvailable else { return }
-            reload()
+            vms = updateDataModels()
+            tableView.reloadData()
         }
     }
-    private lazy var addImageService: AddImageServiceProtocol = AddImageService()
     private lazy var vms: [CommonCellVM] = updateDataModels()
+    private lazy var addImageService: AddImageServiceProtocol = AddImageService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +67,7 @@ final class AddNewsController: UITableViewController {
 extension AddNewsController: AddNewsInputProtocol {
     func editImage() {
         addImageService.showAddImage(isAvailable: newsTemplate.imageData != nil, from: self) { [weak self] in
-            self?.saveImage(data: nil)
+            self?.newsTemplate.imageData = nil
         }
     }
     
@@ -94,9 +94,7 @@ extension AddNewsController: ButtonCellVCProtocol {
 extension AddNewsController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let image = info[.originalImage] as? UIImage, let data = image.getCroppedImage().pngData() {
-            saveImage(data: data)
-        }
+        newsTemplate.imageData = (info[.originalImage] as? UIImage)?.getCroppedImage().pngData()
         dismiss(animated: true)
     }
     
@@ -118,16 +116,6 @@ private extension AddNewsController {
             SpaceCellVM(height: 10),
             ButtonCellVM(cellName: AddNewsCellName(name: .button), text: "Отправить", isEnable: newsTemplate.isSendAvailable)
         ]
-    }
-    
-    func saveImage(data: Data?) {
-        newsTemplate.imageData = data
-        reload()
-    }
-    
-    func reload() {
-        vms = updateDataModels()
-        tableView.reloadData()
     }
     
     func showDidSendAlert() {
