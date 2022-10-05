@@ -5,7 +5,7 @@ protocol SwitcherProtocol: AnyObject {
 }
 
 struct SwitcherCellVM: CommonCellVM {
-    let classId = "SwitcherCell"
+    let classId = String(describing: SwitcherCell.self)
     let cellName: CommonCellNameProtocol
     let text: String
     var isOn: Bool
