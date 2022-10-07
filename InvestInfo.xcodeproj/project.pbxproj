@@ -99,6 +99,7 @@
 		AFA321C828D1AC87007D100E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AFA321CB28D1AC87007D100E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AFA321CD28D1AC87007D100E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFB4A80E28EDE2F20007F0A2 /* InvestInfo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InvestInfo.entitlements; sourceTree = "<group>"; };
 		AFEC582C28D1B08F005A2C7A /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		AFEC582D28D1B08F005A2C7A /* NewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCell.xib; sourceTree = "<group>"; };
 		AFEC583228D1B608005A2C7A /* CommonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCell.swift; sourceTree = "<group>"; };
@@ -236,6 +237,7 @@
 		AFA321BE28D1AC85007D100E /* InvestInfo */ = {
 			isa = PBXGroup;
 			children = (
+				AFB4A80E28EDE2F20007F0A2 /* InvestInfo.entitlements */,
 				AFEC583C28D1C658005A2C7A /* Models */,
 				AFEC582B28D1B065005A2C7A /* Cells */,
 				AF8FA5A428D1AE8000818FDA /* Controllers */,
@@ -579,6 +581,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = InvestInfo/InvestInfo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B5SWW93MKD;
@@ -609,6 +612,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = InvestInfo/InvestInfo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B5SWW93MKD;
