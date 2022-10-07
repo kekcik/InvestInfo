@@ -60,7 +60,7 @@ private extension FeedController {
     }
     
     func fetchData() {
-        AF.request(Constants.baseHost).responseDecodable(of: NewsListDTO.self) { response in
+        AF.request(Constants.baseHost + "/feed").responseDecodable(of: NewsListDTO.self) { response in
             debugPrint("Response: \(response)")
             switch response.result {
             case .success(let data):

@@ -97,7 +97,7 @@ class NewsCell: CommonCell {
         bodyLabel.text = vm.body
         dateLabel.text = df.string(from: vm.date)
         
-        if let imageUrl = vm.imageUrl, let url = URL(string: "\(Constants.baseHost)\(imageUrl)") {
+        if let imageUrl = vm.imageUrl, let url = URL(string: "\(Constants.baseHost)/images/\(imageUrl)") {
             mainImageView.kf.indicatorType = .activity
             DispatchQueue.main.async {
                 self.mainImageView.kf.setImage(with: url) { result in
