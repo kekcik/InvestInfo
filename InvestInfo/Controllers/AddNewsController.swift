@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol AddNewsInputProtocol {
+protocol AddNewsInputProtocol: AnyObject {
     func editImage()
     func setNews(title: String?)
     func setNews(text: String?)

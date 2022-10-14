@@ -1,3 +1,8 @@
+struct MapsData {
+    let ownerId: Int
+    let latitude, longitude: Double
+}
+
 enum MapsDataSource {
     static let markers = [
         MapsData(ownerId: 545, latitude: 55.753098, longitude: 37.633937),

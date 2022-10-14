@@ -27,7 +27,6 @@
 		25D7DE5C28DB18D300888F5A /* MapsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE5928DB18D300888F5A /* MapsDataSource.swift */; };
 		25D7DE5D28DB18D300888F5A /* MapsRouteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE5A28DB18D300888F5A /* MapsRouteInfo.swift */; };
 		25D7DE5F28DB18E500888F5A /* MapsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE5E28DB18E500888F5A /* MapsControllers.swift */; };
-		25D7DE6128DB18F500888F5A /* MapsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE6028DB18F500888F5A /* MapsData.swift */; };
 		25D7DE6328DC618700888F5A /* SettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE6228DC618700888F5A /* SettingsDataSource.swift */; };
 		25D7DE6528DC8EE300888F5A /* UserDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE6428DC8EE300888F5A /* UserDetailsCell.swift */; };
 		25EE659628EB182E00CA5B0E /* AddImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EE659528EB182E00CA5B0E /* AddImageService.swift */; };
@@ -74,7 +73,6 @@
 		25D7DE5928DB18D300888F5A /* MapsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsDataSource.swift; sourceTree = "<group>"; };
 		25D7DE5A28DB18D300888F5A /* MapsRouteInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsRouteInfo.swift; sourceTree = "<group>"; };
 		25D7DE5E28DB18E500888F5A /* MapsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsControllers.swift; sourceTree = "<group>"; };
-		25D7DE6028DB18F500888F5A /* MapsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsData.swift; sourceTree = "<group>"; };
 		25D7DE6228DC618700888F5A /* SettingsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataSource.swift; sourceTree = "<group>"; };
 		25D7DE6428DC8EE300888F5A /* UserDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsCell.swift; sourceTree = "<group>"; };
 		25EE659528EB182E00CA5B0E /* AddImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageService.swift; sourceTree = "<group>"; };
@@ -301,7 +299,6 @@
 		AFEC583C28D1C658005A2C7A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				25D7DE6028DB18F500888F5A /* MapsData.swift */,
 				AFEC583D28D1C668005A2C7A /* NewsDTO.swift */,
 				AFEC583F28D1C675005A2C7A /* NewsListDTO.swift */,
 				AF62CDFC28D1D851003649D2 /* RateDTO.swift */,
@@ -430,7 +427,6 @@
 				25D7DE5328DA1A1E00888F5A /* SettingsController.swift in Sources */,
 				25EE659628EB182E00CA5B0E /* AddImageService.swift in Sources */,
 				25D7DE5D28DB18D300888F5A /* MapsRouteInfo.swift in Sources */,
-				25D7DE6128DB18F500888F5A /* MapsData.swift in Sources */,
 				AF74FDF628D24D5000789177 /* NewsTitleCell.swift in Sources */,
 				AF62CE0028D1D86C003649D2 /* RatesInfoDTO.swift in Sources */,
 				25B15BAE28D877C00006E9FB /* (null) in Sources */,

@@ -1,6 +1,6 @@
 import Foundation
 
-protocol SettingsDataProtocol {
+protocol SettingsDataProtocol: AnyObject {
     func getAvatarData() -> Data?
     func setAvatar(data: Data?)
     func getUserName() -> String
