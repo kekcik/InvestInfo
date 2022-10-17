@@ -16,6 +16,7 @@
 		25BA7F2A28E5CE1200D7E619 /* AddNewsImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BA7F2928E5CE1200D7E619 /* AddNewsImageCell.swift */; };
 		25BA7F2C28E5CE2D00D7E619 /* AddNewsTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BA7F2B28E5CE2D00D7E619 /* AddNewsTextCell.swift */; };
 		25BA7F2F28E72A9B00D7E619 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BA7F2E28E72A9B00D7E619 /* ButtonCell.swift */; };
+		25C4E89A28F9BE6800781EF0 /* PushNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C4E89928F9BE6800781EF0 /* PushNotificationsService.swift */; };
 		25D7DE4928D9F62C00888F5A /* (null) in Sources */ = {isa = PBXBuildFile; };
 		25D7DE4D28D9F63900888F5A /* (null) in Sources */ = {isa = PBXBuildFile; };
 		25D7DE4E28D9F63900888F5A /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -67,6 +68,7 @@
 		25BA7F2928E5CE1200D7E619 /* AddNewsImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewsImageCell.swift; sourceTree = "<group>"; };
 		25BA7F2B28E5CE2D00D7E619 /* AddNewsTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewsTextCell.swift; sourceTree = "<group>"; };
 		25BA7F2E28E72A9B00D7E619 /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
+		25C4E89928F9BE6800781EF0 /* PushNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsService.swift; sourceTree = "<group>"; };
 		25D7DE5228DA1A1E00888F5A /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		25D7DE5428DA1B1200888F5A /* SwitcherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitcherCell.swift; sourceTree = "<group>"; };
 		25D7DE5828DB18D300888F5A /* MapsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsItem.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				25D7DE5828DB18D300888F5A /* MapsItem.swift */,
 				25D7DE5928DB18D300888F5A /* MapsDataSource.swift */,
 				25D7DE5A28DB18D300888F5A /* MapsRouteInfo.swift */,
+				25C4E89928F9BE6800781EF0 /* PushNotificationsService.swift */,
 				25D7DE6228DC618700888F5A /* SettingsDataSource.swift */,
 			);
 			path = Utils;
@@ -404,6 +407,7 @@
 				25B15BB028D8B6DE0006E9FB /* (null) in Sources */,
 				25D7DE4F28D9F63900888F5A /* (null) in Sources */,
 				AF8FA5A828D1AED200818FDA /* CurrencyController.swift in Sources */,
+				25C4E89A28F9BE6800781EF0 /* PushNotificationsService.swift in Sources */,
 				AFEC584028D1C675005A2C7A /* NewsListDTO.swift in Sources */,
 				25D7DE5528DA1B1200888F5A /* SwitcherCell.swift in Sources */,
 				25D7DE5C28DB18D300888F5A /* MapsDataSource.swift in Sources */,
