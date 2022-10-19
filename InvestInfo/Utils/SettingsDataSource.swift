@@ -3,26 +3,36 @@ import Foundation
 protocol SettingsDataProtocol {
     func getAvatarData() -> Data?
     func setAvatar(data: Data?)
-    func getUserName() -> String
-    func setUserName(_ name: String)
+    func getUserName() -> UserName
+    func setUserName(_ name: UserName)
     func getValue(_ settings: SettingsDataSouce.Settings) -> Bool
     func setValue(_ value: Bool, for settings: SettingsDataSouce.Settings)
+}
+
+struct UserName {
+    var name: String? = nil
+    var familyName: String? = nil
 }
 
 final class SettingsDataSouce {
     static let shared: SettingsDataProtocol = SettingsDataSouce()
     private init() {}
     private let userDefaults = UserDefaults.standard
-    private enum UserDetails: String, CaseIterable { case name, avatarData }
+    private enum UserDetails: String, CaseIterable { case name, familyName, avatarData }
+    private enum DefaultUserName: String { case name = "Пользователь", familyName = "Неизвестный" }
     enum Settings: String, CaseIterable { case avatarAvailable, pushNotifications, createNews }
     
     private var avatarData: Data? {
         get { userDefaults.value(forKey: UserDetails.avatarData.rawValue) as? Data }
         set { userDefaults.set(newValue, forKey: UserDetails.avatarData.rawValue) }
     }
-    private var userName: String {
-        get { userDefaults.value(forKey: UserDetails.name.rawValue) as? String ?? "Неизвестный пользователь" }
+    private var name: String? {
+        get { userDefaults.value(forKey: UserDetails.name.rawValue) as? String ?? DefaultUserName.name.rawValue }
         set { userDefaults.set(newValue, forKey: UserDetails.name.rawValue) }
+    }
+    private var familyName: String? {
+        get { userDefaults.value(forKey: UserDetails.familyName.rawValue) as? String ?? DefaultUserName.familyName.rawValue }
+        set { userDefaults.set(newValue, forKey: UserDetails.familyName.rawValue)}
     }
     private var isAvatarAvailable: Bool {
         get { userDefaults.value(forKey: Settings.avatarAvailable.rawValue) as? Bool ?? false }
@@ -47,12 +57,14 @@ extension SettingsDataSouce: SettingsDataProtocol {
     func setAvatar(data: Data?) {
         avatarData = data
     }
-    func getUserName() -> String {
-        userName
+    
+    func getUserName() -> UserName {
+        UserName(name: name, familyName: familyName)
     }
     
-    func setUserName(_ name: String) {
-        userName = name
+    func setUserName(_ userName: UserName) {
+        name = userName.name ?? DefaultUserName.name.rawValue
+        familyName = userName.familyName ?? DefaultUserName.familyName.rawValue
     }
     
     func getValue(_ settings: Settings) -> Bool {
