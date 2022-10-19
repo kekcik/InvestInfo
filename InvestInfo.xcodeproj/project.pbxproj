@@ -24,6 +24,12 @@
 		25D7DE5F28DB18E500888F5A /* MapsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE5E28DB18E500888F5A /* MapsControllers.swift */; };
 		25D7DE6128DB18F500888F5A /* MapsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D7DE6028DB18F500888F5A /* MapsData.swift */; };
 		5014099728D9C7F0004523EA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014099628D9C7F0004523EA /* Utils.swift */; };
+		50889A8028DCAD2F00D31132 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014099628D9C7F0004523EA /* Utils.swift */; };
+		50B58EB928DC9B2400764AAF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58EB828DC9B2400764AAF /* WidgetKit.framework */; };
+		50B58EBB28DC9B2400764AAF /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58EBA28DC9B2400764AAF /* SwiftUI.framework */; };
+		50B58EBE28DC9B2400764AAF /* InvestInfoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B58EBD28DC9B2400764AAF /* InvestInfoWidget.swift */; };
+		50B58EC028DC9B2500764AAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50B58EBF28DC9B2500764AAF /* Assets.xcassets */; };
+		50B58EC428DC9B2500764AAF /* InvestInfoWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 50B58EB628DC9B2400764AAF /* InvestInfoWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AF62CDF828D1C7AE003649D2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AF62CDF728D1C7AE003649D2 /* Kingfisher */; };
 		AF62CDFB28D1C7E6003649D2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = AF62CDFA28D1C7E6003649D2 /* Alamofire */; };
 		AF62CDFD28D1D851003649D2 /* RateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF62CDFC28D1D851003649D2 /* RateDTO.swift */; };
@@ -54,6 +60,30 @@
 		AFEC584028D1C675005A2C7A /* NewsListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEC583F28D1C675005A2C7A /* NewsListDTO.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		50B58EC228DC9B2500764AAF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFA321B428D1AC85007D100E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50B58EB528DC9B2400764AAF;
+			remoteInfo = InvestInfoWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		50B58EC528DC9B2500764AAF /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				50B58EC428DC9B2500764AAF /* InvestInfoWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		25D7DE5228DA1A1E00888F5A /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		25D7DE5428DA1B1200888F5A /* SwitcherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitcherCell.swift; sourceTree = "<group>"; };
@@ -63,6 +93,12 @@
 		25D7DE5E28DB18E500888F5A /* MapsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsControllers.swift; sourceTree = "<group>"; };
 		25D7DE6028DB18F500888F5A /* MapsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsData.swift; sourceTree = "<group>"; };
 		5014099628D9C7F0004523EA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		50B58EB628DC9B2400764AAF /* InvestInfoWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = InvestInfoWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		50B58EB828DC9B2400764AAF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		50B58EBA28DC9B2400764AAF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		50B58EBD28DC9B2400764AAF /* InvestInfoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvestInfoWidget.swift; sourceTree = "<group>"; };
+		50B58EBF28DC9B2500764AAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		50B58EC128DC9B2500764AAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF62CDFC28D1D851003649D2 /* RateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateDTO.swift; sourceTree = "<group>"; };
 		AF62CDFF28D1D86C003649D2 /* RatesInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesInfoDTO.swift; sourceTree = "<group>"; };
 		AF62CE0228D1D96C003649D2 /* RateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateCell.swift; sourceTree = "<group>"; };
@@ -94,6 +130,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		50B58EB328DC9B2400764AAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50B58EBB28DC9B2400764AAF /* SwiftUI.framework in Frameworks */,
+				50B58EB928DC9B2400764AAF /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AFA321B928D1AC85007D100E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -122,6 +167,25 @@
 				25D7DE5A28DB18D300888F5A /* MapsRouteInfo.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		50B58EB728DC9B2400764AAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50B58EB828DC9B2400764AAF /* WidgetKit.framework */,
+				50B58EBA28DC9B2400764AAF /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		50B58EBC28DC9B2400764AAF /* InvestInfoWidget */ = {
+			isa = PBXGroup;
+			children = (
+				50B58EBD28DC9B2400764AAF /* InvestInfoWidget.swift */,
+				50B58EBF28DC9B2500764AAF /* Assets.xcassets */,
+				50B58EC128DC9B2500764AAF /* Info.plist */,
+			);
+			path = InvestInfoWidget;
 			sourceTree = "<group>";
 		};
 		AF62CE0128D1D94E003649D2 /* RateCell */ = {
@@ -176,6 +240,8 @@
 			isa = PBXGroup;
 			children = (
 				AFA321BE28D1AC85007D100E /* InvestInfo */,
+				50B58EBC28DC9B2400764AAF /* InvestInfoWidget */,
+				50B58EB728DC9B2400764AAF /* Frameworks */,
 				AFA321BD28D1AC85007D100E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -184,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				AFA321BC28D1AC85007D100E /* InvestInfo.app */,
+				50B58EB628DC9B2400764AAF /* InvestInfoWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -263,6 +330,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		50B58EB528DC9B2400764AAF /* InvestInfoWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50B58EC828DC9B2500764AAF /* Build configuration list for PBXNativeTarget "InvestInfoWidgetExtension" */;
+			buildPhases = (
+				50B58EB228DC9B2400764AAF /* Sources */,
+				50B58EB328DC9B2400764AAF /* Frameworks */,
+				50B58EB428DC9B2400764AAF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InvestInfoWidgetExtension;
+			productName = InvestInfoWidgetExtension;
+			productReference = 50B58EB628DC9B2400764AAF /* InvestInfoWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		AFA321BB28D1AC85007D100E /* InvestInfo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AFA321D028D1AC87007D100E /* Build configuration list for PBXNativeTarget "InvestInfo" */;
@@ -270,10 +354,12 @@
 				AFA321B828D1AC85007D100E /* Sources */,
 				AFA321B928D1AC85007D100E /* Frameworks */,
 				AFA321BA28D1AC85007D100E /* Resources */,
+				50B58EC528DC9B2500764AAF /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				50B58EC328DC9B2500764AAF /* PBXTargetDependency */,
 			);
 			name = InvestInfo;
 			packageProductDependencies = (
@@ -291,9 +377,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
+					50B58EB528DC9B2400764AAF = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 					AFA321BB28D1AC85007D100E = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
@@ -317,11 +406,20 @@
 			projectRoot = "";
 			targets = (
 				AFA321BB28D1AC85007D100E /* InvestInfo */,
+				50B58EB528DC9B2400764AAF /* InvestInfoWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		50B58EB428DC9B2400764AAF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50B58EC028DC9B2500764AAF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AFA321BA28D1AC85007D100E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -341,6 +439,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		50B58EB228DC9B2400764AAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50B58EBE28DC9B2400764AAF /* InvestInfoWidget.swift in Sources */,
+				50889A8028DCAD2F00D31132 /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AFA321B828D1AC85007D100E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -384,6 +491,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		50B58EC328DC9B2500764AAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50B58EB528DC9B2400764AAF /* InvestInfoWidgetExtension */;
+			targetProxy = 50B58EC228DC9B2500764AAF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		AFA321C528D1AC85007D100E /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -404,6 +519,64 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		50B58EC628DC9B2500764AAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B5SWW93MKD;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = InvestInfoWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = InvestInfoWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = trofimov.mobi.InvestInfo.InvestInfoWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		50B58EC728DC9B2500764AAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B5SWW93MKD;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = InvestInfoWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = InvestInfoWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = trofimov.mobi.InvestInfo.InvestInfoWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		AFA321CE28D1AC87007D100E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -521,6 +694,7 @@
 		AFA321D128D1AC87007D100E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -551,6 +725,7 @@
 		AFA321D228D1AC87007D100E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -581,6 +756,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		50B58EC828DC9B2500764AAF /* Build configuration list for PBXNativeTarget "InvestInfoWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50B58EC628DC9B2500764AAF /* Debug */,
+				50B58EC728DC9B2500764AAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AFA321B728D1AC85007D100E /* Build configuration list for PBXProject "InvestInfo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
