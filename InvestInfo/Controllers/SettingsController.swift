@@ -9,7 +9,7 @@ import UIKit
 
 final class SettingsController: UITableViewController {
     private var vms: [CommonCellVM] = []
-    private var settingsDataSource: SettingsDataProtocol = SettingsDataSouce.shared
+    private var settingsStorage: SettingsStorageProtocol = SettingsStorageService.shared
     private lazy var addImageService: AddImageServiceProtocol = AddImageService()
     private lazy var templateUserName: UserName = UserName()
     private enum UserNameTag: Int {
@@ -60,8 +60,8 @@ extension SettingsController: SwitcherProtocol {
     func switcherChange(state: Bool, name: CommonCellNameProtocol) {
         guard let localName = (name as? SettingsCellName)?.name else { return }
         switch localName {
-        case .pushNotifications:    settingsDataSource.setValue(state, for: .pushNotifications)
-        case .createNews:           settingsDataSource.setValue(state, for: .createNews)
+        case .pushNotifications:    settingsStorage.setValue(state, for: .pushNotifications)
+        case .createNews:           settingsStorage.setValue(state, for: .createNews)
         default: break
         }
     }
@@ -71,7 +71,7 @@ extension SettingsController: SwitcherProtocol {
 extension SettingsController: UserDetailsEditingProtocol {
     func editAvatar() {
         guard isUserDetailsEditing else { return }
-        addImageService.showAddImage(isAvailable: settingsDataSource.getValue(.avatarAvailable), from: self) { [weak self] in
+        addImageService.showAddImage(isAvailable: settingsStorage.getValue(.avatarAvailable), from: self) { [weak self] in
             self?.saveAvatar(nil)
         }
     }
@@ -79,7 +79,7 @@ extension SettingsController: UserDetailsEditingProtocol {
     func editUserName() {
         guard isUserDetailsEditing else { return }
         let alert = UIAlertController(title: "Представьтесь", message: "это поможет в общении", preferredStyle: .alert)
-        let userName = settingsDataSource.getUserName()
+        let userName = settingsStorage.getUserName()
         alert.addTextField { [weak self] textField in
             self?.setup(textField: textField, userName: userName, for: (alert.textFields?.count ?? 1) - 1)
         }
@@ -89,7 +89,7 @@ extension SettingsController: UserDetailsEditingProtocol {
         alert.addAction(UIAlertAction(title: "Отменить", style: .cancel))
         alert.addAction(UIAlertAction(title: "Сохранить", style: .default) { [weak self] _ in
             guard let self = self else { return }
-            self.settingsDataSource.setUserName(self.templateUserName)
+            self.settingsStorage.setUserName(self.templateUserName)
             self.reload()
         })
         present(alert, animated: true)
@@ -134,19 +134,19 @@ private extension SettingsController {
     }
     
     func updateData() {
-        let userName = settingsDataSource.getUserName()
+        let userName = settingsStorage.getUserName()
         vms = [
             UserDetailsCellVM(cellName: SettingsCellName(name: .userDetails),
-                              avatarData: settingsDataSource.getAvatarData(),
+                              avatarData: settingsStorage.getAvatarData(),
                               userName: [userName.name ?? "", userName.familyName ?? ""].joined(separator: " ")),
             SpaceCellVM(height: 20),
             SwitcherCellVM(cellName: SettingsCellName(name: .pushNotifications),
                            text: "Push-уведомления",
-                           isOn: settingsDataSource.getValue(.pushNotifications)),
+                           isOn: settingsStorage.getValue(.pushNotifications)),
             SpaceCellVM(height: 20),
             SwitcherCellVM(cellName: SettingsCellName(name: .createNews),
                            text: "Создание новостей",
-                           isOn: settingsDataSource.getValue(.createNews))
+                           isOn: settingsStorage.getValue(.createNews))
         ]
     }
     
@@ -175,8 +175,8 @@ private extension SettingsController {
     }
     
     func saveAvatar(_ data: Data?) {
-        settingsDataSource.setValue(data != nil, for: .avatarAvailable)
-        settingsDataSource.setAvatar(data: data)
+        settingsStorage.setValue(data != nil, for: .avatarAvailable)
+        settingsStorage.setAvatar(data: data)
         reload()
     }
     

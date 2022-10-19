@@ -2,7 +2,7 @@ import UIKit
 import UserNotifications
 
 protocol PushNotificationsServiceProtocol {
-    func updatePushNotifications(isEnable: Bool)
+    func updatePushNotifications()
     func update(deviceToken: Data)
 }
 
@@ -11,32 +11,23 @@ final class PushNotificationsService {
     private init() {}
     private var settings: UNNotificationSettings?
     private var token: String?
-    private var isEnable: Bool = SettingsDataSouce.shared.getValue(.pushNotifications)
+    private var isEnable: Bool { SettingsStorageService.shared.getValue(.pushNotifications) }
+    private var isShowSettingsAlertOnlyOnes = true
 }
 
 extension PushNotificationsService: PushNotificationsServiceProtocol {
-    func updatePushNotifications(isEnable: Bool) {
-        self.isEnable = isEnable
+    func updatePushNotifications() {
         updateStatus()
     }
     
     func update(deviceToken: Data) {
         token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         print("Device Token: \(token ?? "noToken")")
-        subscribeUpdatePushNotificationsStatus()
     }
 }
 
 // MARK: - Helper
 private extension PushNotificationsService {
-    func subscribeUpdatePushNotificationsStatus() {
-        /// Сначала удаляем все подписки, потом подписываемся заново
-        NotificationCenter.default.removeObserver(self)
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(updateStatus),
-            name: UIApplication.willEnterForegroundNotification, object: nil)
-    }
-    
     @objc func updateStatus() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             [weak self] granted, error in
@@ -68,24 +59,51 @@ private extension PushNotificationsService {
     }
     
     func showGoToSettingsAlert() {
-        DispatchQueue.main.async {
+        guard isShowSettingsAlertOnlyOnes else {
+            showWarning()
+            return
+        }
+        DispatchQueue.main.async { [weak self] in
             let alert = UIAlertController(
                 title: "Внимание!",
                 message: "Получение пуш уведомлений отключено.\nИзменить можно в настройках телефона",
                 preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Отменить", style: .cancel))
-            alert.addAction(UIAlertAction(title: "Перейти", style: .default) { _ in
-                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            alert.addAction(UIAlertAction(title: "Перейти", style: .default) { [weak self] _ in
+                guard let self = self, let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                self.subscribeUpdatePushNotificationsStatus()
+                self.isShowSettingsAlertOnlyOnes = false
                 UIApplication.shared.open(url, options: [:])
             })
-            
-            let keyWindow = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
-            
-            guard var topController = keyWindow?.rootViewController else { return }
-            while let presentedViewController = topController.presentedViewController {
-                topController = presentedViewController
-            }
-            topController.present(alert, animated: true)
+            self?.getCurrentController()?.present(alert, animated: true)
         }
+    }
+    
+    func subscribeUpdatePushNotificationsStatus() {
+        /// Сначала удаляем все подписки, потом подписываемся заново
+        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(updateStatus),
+            name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    func showWarning() {
+        DispatchQueue.main.async { [weak self] in
+            let alert = UIAlertController(
+                title: "Внимание!",
+                message: "В настройках телефона, для нашего приложения, выключены пуш уведомления",
+                preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "ОК", style: .cancel))
+            self?.getCurrentController()?.present(alert, animated: true)
+        }
+    }
+    
+    func getCurrentController() -> UIViewController? {
+        guard var topController = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController
+        else { return nil }
+        while let presentedViewController = topController.presentedViewController {
+            topController = presentedViewController
+        }
+        return topController
     }
 }

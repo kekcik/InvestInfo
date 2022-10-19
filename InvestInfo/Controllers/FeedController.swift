@@ -25,7 +25,7 @@ final class FeedController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.rightBarButtonItem = SettingsDataSouce.shared.getValue(.createNews) ?
+        navigationItem.rightBarButtonItem = SettingsStorageService.shared.getValue(.createNews) ?
         UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNews)) : nil
     }
 
