@@ -7,12 +7,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Для поиска обменных пунктов рядом</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Для создания фото и видео новостей</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Для создания ярких новостей</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

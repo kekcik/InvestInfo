@@ -8,7 +8,7 @@
 import UIKit
 
 struct Constants {
-    static let baseHost = "http://investinfo.freemyip.com"
+    static let baseHost = "http://161.35.211.1"
 }
 
 extension UIImage {
