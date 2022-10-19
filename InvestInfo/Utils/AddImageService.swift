@@ -4,7 +4,7 @@ import Photos
 
 typealias AddImageServiceVC = UIViewController & UIImagePickerControllerDelegate & UINavigationControllerDelegate
 
-protocol AddImageServiceProtocol {
+protocol AddImageServiceProtocol: AnyObject {
     func showAddImage(isAvailable: Bool, from vc: AddImageServiceVC, removeCompletion: @escaping () -> Void)
 }
 

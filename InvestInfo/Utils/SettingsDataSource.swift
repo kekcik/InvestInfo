@@ -1,6 +1,6 @@
 import Foundation
 
-protocol SettingsDataProtocol {
+protocol SettingsDataProtocol: AnyObject {
     func getAvatarData() -> Data?
     func setAvatar(data: Data?)
     func getUserName() -> UserName
@@ -17,6 +17,7 @@ struct UserName {
 final class SettingsDataSouce {
     static let shared: SettingsDataProtocol = SettingsDataSouce()
     private init() {}
+    private lazy var pushNotificationsService: PushNotificationsServiceProtocol = PushNotificationsService.shared
     private let userDefaults = UserDefaults.standard
     private enum UserDetails: String, CaseIterable { case name, familyName, avatarData }
     private enum DefaultUserName: String { case name = "Пользователь", familyName = "Неизвестный" }
@@ -40,7 +41,10 @@ final class SettingsDataSouce {
     }
     private var isOnPushNotifications: Bool {
         get { userDefaults.value(forKey: Settings.pushNotifications.rawValue) as? Bool ?? false }
-        set { userDefaults.set(newValue, forKey: Settings.pushNotifications.rawValue) }
+        set {
+            userDefaults.set(newValue, forKey: Settings.pushNotifications.rawValue)
+            pushNotificationsService.updatePushNotifications(isEnable: newValue)
+        }
     }
     private var isOnCreateNews: Bool {
         get { userDefaults.value(forKey: Settings.createNews.rawValue) as? Bool ?? false }

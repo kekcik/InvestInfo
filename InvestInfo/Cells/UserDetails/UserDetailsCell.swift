@@ -1,7 +1,7 @@
 import UIKit
 import SwiftUI
 
-protocol UserDetailsEditingProtocol {
+protocol UserDetailsEditingProtocol: AnyObject {
     func editAvatar()
     func editUserName()
 }
