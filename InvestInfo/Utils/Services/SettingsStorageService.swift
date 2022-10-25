@@ -1,12 +1,12 @@
 import Foundation
 
-protocol SettingsDataProtocol: AnyObject {
+protocol SettingsStorageProtocol: AnyObject {
     func getAvatarData() -> Data?
     func setAvatar(data: Data?)
     func getUserName() -> UserName
     func setUserName(_ name: UserName)
-    func getValue(_ settings: SettingsDataSouce.Settings) -> Bool
-    func setValue(_ value: Bool, for settings: SettingsDataSouce.Settings)
+    func getValue(_ settings: SettingsStorageService.Settings) -> Bool
+    func setValue(_ value: Bool, for settings: SettingsStorageService.Settings)
 }
 
 struct UserName {
@@ -14,8 +14,8 @@ struct UserName {
     var familyName: String? = nil
 }
 
-final class SettingsDataSouce {
-    static let shared: SettingsDataProtocol = SettingsDataSouce()
+final class SettingsStorageService {
+    static let shared: SettingsStorageProtocol = SettingsStorageService()
     private init() {}
     private lazy var pushNotificationsService: PushNotificationsServiceProtocol = PushNotificationsService.shared
     private let userDefaults = UserDefaults.standard
@@ -43,7 +43,7 @@ final class SettingsDataSouce {
         get { userDefaults.value(forKey: Settings.pushNotifications.rawValue) as? Bool ?? false }
         set {
             userDefaults.set(newValue, forKey: Settings.pushNotifications.rawValue)
-            pushNotificationsService.updatePushNotifications(isEnable: newValue)
+            pushNotificationsService.updatePushNotifications()
         }
     }
     private var isOnCreateNews: Bool {
@@ -53,7 +53,7 @@ final class SettingsDataSouce {
 }
 
 // MARK: - SettingsDataProtocol
-extension SettingsDataSouce: SettingsDataProtocol {
+extension SettingsStorageService: SettingsStorageProtocol {
     func getAvatarData() -> Data? {
         avatarData
     }
